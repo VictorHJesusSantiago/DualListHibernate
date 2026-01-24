@@ -13,12 +13,10 @@ public class Aluno {
     private String email;
     private String telefone;
 
-    // NOVO CAMPO: Define se o aluno já começa na lista da direita
     private boolean matriculadoNaDisciplina = false;
 
     public Aluno() {}
 
-    // Construtor completo
     public Aluno(String nome, String matricula, String email, String telefone, boolean matriculadoNaDisciplina) {
         this.nome = nome;
         this.matricula = matricula;

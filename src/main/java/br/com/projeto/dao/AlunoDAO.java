@@ -13,7 +13,7 @@ public class AlunoDAO {
         Transaction tx = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            session.merge(aluno); // Merge serve para Salvar (novo) ou Atualizar (existente)
+            session.merge(aluno);
             tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();

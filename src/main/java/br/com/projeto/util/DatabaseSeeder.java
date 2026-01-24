@@ -20,19 +20,17 @@ public class DatabaseSeeder {
         System.out.println(">>> INICIANDO MIGRATION: GERANDO 1100 ALUNOS...");
         Random random = new Random();
 
-        // 1. Gera 1000 alunos DISPONÍVEIS (matriculado = false)
         for (int i = 1; i <= 1000; i++) {
             String nome = gerarNomeAleatorio(random);
-            String matricula = "2026" + String.format("%04d", i); // Ex: 20260001
+            String matricula = "2026" + String.format("%04d", i);
             Aluno a = new Aluno(nome, matricula, matricula + "@escola.com", "9999-0000", false);
             dao.salvarOuAtualizar(a);
         }
 
-        // 2. Gera 100 alunos JÁ MATRICULADOS (matriculado = true)
         for (int i = 1001; i <= 1100; i++) {
             String nome = gerarNomeAleatorio(random);
             String matricula = "2026" + String.format("%04d", i);
-            Aluno a = new Aluno(nome, matricula, matricula + "@escola.com", "9999-0000", true); // True aqui
+            Aluno a = new Aluno(nome, matricula, matricula + "@escola.com", "9999-0000", true);
             dao.salvarOuAtualizar(a);
         }
 

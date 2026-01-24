@@ -3,7 +3,7 @@ package br.com.projeto.view;
 import br.com.projeto.dao.UsuarioDAO;
 import br.com.projeto.model.Usuario;
 import br.com.projeto.util.SecurityUtil;
-import br.com.projeto.MainApp; // Referência para abrir o main
+import br.com.projeto.MainApp;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import javax.swing.*;
@@ -56,7 +56,6 @@ public class LoginView extends JFrame {
         btnIrCadastro.setForeground(Color.BLUE);
         btnIrCadastro.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Layout
         gbc.gridy = 0; panel.add(title, gbc);
         gbc.gridy = 1; panel.add(Box.createVerticalStrut(20), gbc);
         gbc.gridy = 2; panel.add(txtLogin, gbc);
@@ -65,7 +64,6 @@ public class LoginView extends JFrame {
         gbc.gridy = 5; panel.add(btnEntrar, gbc);
         gbc.gridy = 6; panel.add(btnIrCadastro, gbc);
 
-        // Ações
         btnIrCadastro.addActionListener(e -> cardLayout.show(mainPanel, "REGISTER"));
 
         btnEntrar.addActionListener(e -> {
@@ -107,7 +105,6 @@ public class LoginView extends JFrame {
         btnVoltar.setContentAreaFilled(false);
         btnVoltar.setForeground(Color.GRAY);
 
-        // Layout
         gbc.gridy = 0; panel.add(title, gbc);
         gbc.gridy = 1; panel.add(Box.createVerticalStrut(20), gbc);
         gbc.gridy = 2; panel.add(txtLogin, gbc);
@@ -116,7 +113,6 @@ public class LoginView extends JFrame {
         gbc.gridy = 5; panel.add(btnCadastrar, gbc);
         gbc.gridy = 6; panel.add(btnVoltar, gbc);
 
-        // Ações
         btnVoltar.addActionListener(e -> cardLayout.show(mainPanel, "LOGIN"));
 
         btnCadastrar.addActionListener(e -> {
@@ -157,7 +153,6 @@ public class LoginView extends JFrame {
     }
 
     public static void main(String[] args) {
-        // Inicializa o tema FlatLaf e abre o Login
         try { UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf()); } catch (Exception e) {}
         SwingUtilities.invokeLater(() -> new LoginView().setVisible(true));
     }

@@ -16,7 +16,6 @@ public class DualListSelector<T> extends JPanel {
     private JList<T> sourceList;
     private JList<T> targetList;
 
-    // Botões customizados
     private JButton btnAdd;
     private JButton btnRemove;
     private JButton btnAddAll;
@@ -35,7 +34,6 @@ public class DualListSelector<T> extends JPanel {
         sourceList = new JList<>(sourceModel);
         targetList = new JList<>(targetModel);
 
-        // Instanciando nossos botões desenhados manualmente
         btnAdd = new ArrowButton(ArrowButton.Type.RIGHT_SINGLE);
         btnRemove = new ArrowButton(ArrowButton.Type.LEFT_SINGLE);
         btnAddAll = new ArrowButton(ArrowButton.Type.RIGHT_DOUBLE);
@@ -45,7 +43,6 @@ public class DualListSelector<T> extends JPanel {
     private void styleComponents() {
         setBackground(new Color(240, 242, 245));
 
-        // Renderer customizado
         StudentRenderer renderer = new StudentRenderer();
         sourceList.setCellRenderer((ListCellRenderer<? super T>) renderer);
         targetList.setCellRenderer((ListCellRenderer<? super T>) renderer);
@@ -58,7 +55,6 @@ public class DualListSelector<T> extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Painel Esquerdo
         JPanel leftPanel = createCardPanel("Alunos Disponíveis", sourceList, new Color(255, 255, 255));
         gbc.gridx = 0; gbc.gridy = 0;
         gbc.weightx = 0.45;
@@ -67,7 +63,6 @@ public class DualListSelector<T> extends JPanel {
         gbc.insets = new Insets(10, 20, 10, 10);
         add(leftPanel, gbc);
 
-        // Botões Centrais
         JPanel centerPanel = new JPanel(new GridLayout(4, 1, 0, 15));
         centerPanel.setOpaque(false);
         centerPanel.add(btnAdd);
@@ -85,7 +80,6 @@ public class DualListSelector<T> extends JPanel {
         gbc.insets = new Insets(10, 0, 10, 0);
         add(centerWrapper, gbc);
 
-        // Painel Direito
         JPanel rightPanel = createCardPanel("Matriculados", targetList, new Color(245, 250, 255));
         gbc.gridx = 2;
         gbc.weightx = 0.45;
@@ -113,7 +107,6 @@ public class DualListSelector<T> extends JPanel {
         return panel;
     }
 
-    // --- Métodos Públicos de Acesso aos Dados (CORREÇÃO AQUI) ---
 
     public void setTargetItems(List<T> items) {
         targetModel.clear();
@@ -137,7 +130,6 @@ public class DualListSelector<T> extends JPanel {
         return items;
     }
 
-    // Método que faltava para listar o que está na esquerda (para o MainApp atualizar a lista)
     public List<T> getSourceItems() {
         List<T> items = new ArrayList<>();
         for (int i = 0; i < sourceModel.getSize(); i++) {
@@ -146,13 +138,10 @@ public class DualListSelector<T> extends JPanel {
         return items;
     }
 
-    // Método que faltava para pegar o item selecionado para Edição/Exclusão
     public T getSelectedSourceItem() {
         return sourceList.getSelectedValue();
     }
 
-    // --- Classes Internas (Renderer e Icon) ---
-    // (Mantido igual ao anterior, omitido para economizar espaço, mas deve estar presente)
     class StudentRenderer extends DefaultListCellRenderer {
         private final Color SELECTION_BG = new Color(220, 240, 255);
         private final Icon USER_ICON = new UserIcon(18, new Color(150, 150, 150));

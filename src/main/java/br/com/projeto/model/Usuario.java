@@ -9,7 +9,7 @@ public class Usuario {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String login; // Nome completo ou Username
+    private String login;
 
     @Column(nullable = false)
     private String senhaHash;
@@ -20,7 +20,6 @@ public class Usuario {
         this.senhaHash = senhaHash;
     }
 
-    // Getters e Setters
     public Long getId() { return id; }
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }

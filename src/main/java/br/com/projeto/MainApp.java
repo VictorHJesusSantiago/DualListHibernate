@@ -3,7 +3,7 @@ package br.com.projeto;
 import br.com.projeto.dao.AlunoDAO;
 import br.com.projeto.dao.UsuarioDAO;
 import br.com.projeto.model.Aluno;
-import br.com.projeto.util.DatabaseSeeder; // Importar o Seeder
+import br.com.projeto.util.DatabaseSeeder;
 import br.com.projeto.view.AlunoFormDialog;
 import br.com.projeto.view.DualListSelector;
 import br.com.projeto.view.LoginView;
@@ -28,7 +28,6 @@ public class MainApp extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // --- Toolbar e CRUD (Código mantido igual) ---
         JToolBar toolbar = new JToolBar();
         toolbar.setFloatable(false);
         toolbar.setBackground(Color.WHITE);
@@ -41,11 +40,9 @@ public class MainApp extends JFrame {
         toolbar.add(btnExcluir);
         add(toolbar, BorderLayout.NORTH);
 
-        // --- Dual List Selector ---
         selector = new DualListSelector<>();
         add(selector, BorderLayout.CENTER);
 
-        // --- Lógica dos Botões (Mantida igual, resumida aqui) ---
         btnNovo.addActionListener(e -> {
             AlunoFormDialog dialog = new AlunoFormDialog(this, null);
             dialog.setVisible(true);
@@ -68,7 +65,6 @@ public class MainApp extends JFrame {
             }
         });
 
-        // --- Botão Matricular ---
         JButton btnMatricular = new JButton("Salvar Matrículas");
         btnMatricular.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnMatricular.setBackground(new Color(76, 175, 80));
@@ -76,11 +72,9 @@ public class MainApp extends JFrame {
         btnMatricular.putClientProperty(FlatClientProperties.STYLE, "arc: 10; margin: 10,0,10,0");
 
         btnMatricular.addActionListener(e -> {
-            // Lógica para salvar a seleção no banco
             List<Aluno> listaEsquerda = selector.getSourceItems();
             List<Aluno> listaDireita = selector.getTargetItems();
 
-            // Atualiza no banco quem está matriculado e quem não está
             for (Aluno a : listaDireita) {
                 a.setMatriculadoNaDisciplina(true);
                 alunoDAO.salvarOuAtualizar(a);
@@ -100,11 +94,8 @@ public class MainApp extends JFrame {
         atualizarListas();
     }
 
-    // --- Lógica Inteligente de Carga das Listas ---
     private void atualizarListas() {
         List<Aluno> todos = alunoDAO.listarTodos();
-
-        // Filtra usando Java Streams (Lambda)
         List<Aluno> naoMatriculados = todos.stream()
                 .filter(a -> !a.isMatriculadoNaDisciplina())
                 .collect(Collectors.toList());
@@ -114,7 +105,7 @@ public class MainApp extends JFrame {
                 .collect(Collectors.toList());
 
         selector.setSourceItems(naoMatriculados);
-        selector.setTargetItems(matriculados); // Usa o novo método criado
+        selector.setTargetItems(matriculados);
     }
 
     private JButton createToolbarButton(String text, Color color) {
@@ -128,12 +119,9 @@ public class MainApp extends JFrame {
 
     public static void main(String[] args) {
         try { UIManager.setLookAndFeel(new FlatLightLaf()); } catch (Exception ex) {}
-
-        // --- RODA A MIGRATION DE DADOS ---
-        // Se o banco estiver vazio, cria Admin e 1100 Alunos
         try {
             new UsuarioDAO().criarUsuarioAdminSeNaoExistir();
-            DatabaseSeeder.run(); // <--- Chama o Seeder aqui
+            DatabaseSeeder.run();
         } catch (Exception e) {
             e.printStackTrace();
         }

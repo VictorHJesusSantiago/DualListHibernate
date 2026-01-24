@@ -7,7 +7,6 @@ import br.com.projeto.view.DualListSelector;
 import javax.swing.*;
 import java.util.List;
 
-// A classe está marcada como não usada porque o MainApp assumiu suas funções
 @SuppressWarnings("unused")
 public class MatriculaController {
 
@@ -22,7 +21,6 @@ public class MatriculaController {
     public void carregarDadosIniciais() {
         List<Aluno> lista = alunoDAO.listarTodos();
         if (lista.isEmpty()) {
-            // Atualizado com 'false' no final para bater com o novo construtor do Aluno
             alunoDAO.salvarOuAtualizar(new Aluno("João Silva", "2023001", "joao@email.com", "9999-1111", false));
             alunoDAO.salvarOuAtualizar(new Aluno("Maria Oliveira", "2023002", "maria@email.com", "9999-2222", false));
             alunoDAO.salvarOuAtualizar(new Aluno("Carlos Santos", "2023003", "carlos@email.com", "9999-3333", false));

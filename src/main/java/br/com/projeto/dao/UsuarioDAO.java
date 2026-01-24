@@ -2,7 +2,7 @@ package br.com.projeto.dao;
 
 import br.com.projeto.model.Usuario;
 import br.com.projeto.util.HibernateUtil;
-import br.com.projeto.util.SecurityUtil; // Importante para criptografar a senha padrão
+import br.com.projeto.util.SecurityUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -29,11 +29,9 @@ public class UsuarioDAO {
         }
     }
 
-    // --- NOVO MÉTODO: CRIA O USUÁRIO PADRÃO ---
     public void criarUsuarioAdminSeNaoExistir() {
         Usuario admin = buscarPorLogin("admin");
         if (admin == null) {
-            // Cria o usuário se ele não existir
             String senhaCriptografada = SecurityUtil.hashPassword("1234");
             Usuario novoAdmin = new Usuario("admin", senhaCriptografada);
             salvar(novoAdmin);
