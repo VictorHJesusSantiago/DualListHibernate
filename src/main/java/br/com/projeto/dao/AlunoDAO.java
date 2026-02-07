@@ -4,7 +4,7 @@ import br.com.projeto.model.Aluno;
 import br.com.projeto.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+
 import java.util.List;
 
 public class AlunoDAO {

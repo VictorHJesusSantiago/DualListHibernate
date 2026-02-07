@@ -5,15 +5,19 @@ import br.com.projeto.model.Usuario;
 import br.com.projeto.util.SecurityUtil;
 import br.com.projeto.MainApp;
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginView extends JFrame {
-    private CardLayout cardLayout;
-    private JPanel mainPanel;
-    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+    private static final Logger LOGGER = Logger.getLogger(LoginView.class.getName());
+    private final CardLayout cardLayout;
+    private final JPanel mainPanel;
+    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     public LoginView() {
         setTitle("Acesso ao Sistema");
@@ -45,7 +49,6 @@ public class LoginView extends JFrame {
 
         JTextField txtLogin = new JTextField();
         txtLogin.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
-
         JPasswordField txtSenha = new JPasswordField();
         txtSenha.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");
 
@@ -69,15 +72,13 @@ public class LoginView extends JFrame {
         btnEntrar.addActionListener(e -> {
             String login = txtLogin.getText();
             String senha = new String(txtSenha.getPassword());
-
             Usuario u = usuarioDAO.buscarPorLogin(login);
             if (u != null && SecurityUtil.checkPassword(senha, u.getSenhaHash())) {
-                abrirSistemaPrincipal();
+                abrirSistemaPrincipal(u);
             } else {
                 JOptionPane.showMessageDialog(this, "Login ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
-
         return panel;
     }
 
@@ -95,7 +96,6 @@ public class LoginView extends JFrame {
 
         JTextField txtLogin = new JTextField();
         txtLogin.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Escolha um Usuário");
-
         JPasswordField txtSenha = new JPasswordField();
         txtSenha.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Escolha uma Senha");
 
@@ -118,12 +118,10 @@ public class LoginView extends JFrame {
         btnCadastrar.addActionListener(e -> {
             String login = txtLogin.getText();
             String senha = new String(txtSenha.getPassword());
-
             if (login.isEmpty() || senha.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos.");
                 return;
             }
-
             try {
                 String hash = SecurityUtil.hashPassword(senha);
                 Usuario novo = new Usuario(login, hash);
@@ -134,7 +132,6 @@ public class LoginView extends JFrame {
                 JOptionPane.showMessageDialog(this, "Erro ao criar conta. Usuário já existe?");
             }
         });
-
         return panel;
     }
 
@@ -147,13 +144,17 @@ public class LoginView extends JFrame {
         return btn;
     }
 
-    private void abrirSistemaPrincipal() {
+    private void abrirSistemaPrincipal(Usuario usuario) {
         this.dispose();
-        SwingUtilities.invokeLater(() -> new MainApp().setVisible(true));
+        SwingUtilities.invokeLater(() -> new MainApp(usuario).setVisible(true));
     }
 
     public static void main(String[] args) {
-        try { UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatLightLaf()); } catch (Exception e) {}
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Erro ao configurar LookAndFeel", e);
+        }
         SwingUtilities.invokeLater(() -> new LoginView().setVisible(true));
     }
 }

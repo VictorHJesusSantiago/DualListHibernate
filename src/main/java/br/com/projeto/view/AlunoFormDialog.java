@@ -7,12 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AlunoFormDialog extends JDialog {
-    private JTextField txtNome = new JTextField();
-    private JTextField txtMatricula = new JTextField();
-    private JTextField txtEmail = new JTextField();
-    private JTextField txtTelefone = new JTextField();
+    private final JTextField txtNome = new JTextField();
+    private final JTextField txtMatricula = new JTextField();
+    private final JTextField txtEmail = new JTextField();
+    private final JTextField txtTelefone = new JTextField();
     private boolean confirmado = false;
-    private Aluno aluno;
+    private final Aluno aluno;
 
     public AlunoFormDialog(Frame parent, Aluno alunoParaEditar) {
         super(parent, true);
@@ -48,10 +48,24 @@ public class AlunoFormDialog extends JDialog {
         btnSalvar.putClientProperty(FlatClientProperties.STYLE, "arc: 10");
 
         btnSalvar.addActionListener(e -> {
+            String email = txtEmail.getText().trim();
+            String telefone = txtTelefone.getText().trim();
+
+            if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                JOptionPane.showMessageDialog(this, "E-mail inválido! Por favor verifique.", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String telefoneLimpo = telefone.replaceAll("[^0-9]", "");
+            if (telefoneLimpo.length() < 10 || telefoneLimpo.length() > 11) {
+                JOptionPane.showMessageDialog(this, "Telefone inválido! Insira um número com DDD (10 ou 11 dígitos).", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             aluno.setNome(txtNome.getText());
             aluno.setMatricula(txtMatricula.getText());
-            aluno.setEmail(txtEmail.getText());
-            aluno.setTelefone(txtTelefone.getText());
+            aluno.setEmail(email);
+            aluno.setTelefone(telefone);
             confirmado = true;
             dispose();
         });

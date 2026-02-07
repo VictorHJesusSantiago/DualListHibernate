@@ -3,6 +3,7 @@ package br.com.projeto;
 import br.com.projeto.dao.AlunoDAO;
 import br.com.projeto.dao.UsuarioDAO;
 import br.com.projeto.model.Aluno;
+import br.com.projeto.model.Usuario;
 import br.com.projeto.util.DatabaseSeeder;
 import br.com.projeto.view.AlunoFormDialog;
 import br.com.projeto.view.DualListSelector;
@@ -14,14 +15,17 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class MainApp extends JFrame {
 
+    private static final Logger LOGGER = Logger.getLogger(MainApp.class.getName());
     private final AlunoDAO alunoDAO = new AlunoDAO();
     private final DualListSelector<Aluno> selector;
 
-    public MainApp() {
+    public MainApp(Usuario usuario) {
         setTitle("Sistema Acadêmico - Painel Administrativo");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 700);
@@ -32,37 +36,64 @@ public class MainApp extends JFrame {
         toolbar.setFloatable(false);
         toolbar.setBackground(Color.WHITE);
         toolbar.setBorder(new EmptyBorder(5, 5, 5, 5));
+
         JButton btnNovo = createToolbarButton("Novo Aluno", new Color(0, 150, 136));
         JButton btnEditar = createToolbarButton("Ver/Editar", new Color(33, 150, 243));
         JButton btnExcluir = createToolbarButton("Excluir", new Color(244, 67, 54));
-        toolbar.add(btnNovo); toolbar.add(Box.createHorizontalStrut(10));
-        toolbar.add(btnEditar); toolbar.add(Box.createHorizontalStrut(10));
+        JButton btnLogout = createToolbarButton("Sair", new Color(108, 117, 125));
+
+        toolbar.add(btnNovo);
+        toolbar.add(Box.createHorizontalStrut(10));
+        toolbar.add(btnEditar);
+        toolbar.add(Box.createHorizontalStrut(10));
         toolbar.add(btnExcluir);
+        toolbar.add(Box.createHorizontalGlue());
+        toolbar.add(btnLogout);
+
         add(toolbar, BorderLayout.NORTH);
 
         selector = new DualListSelector<>();
+        selector.setUsuarioLogado(usuario);
         add(selector, BorderLayout.CENTER);
 
         btnNovo.addActionListener(e -> {
             AlunoFormDialog dialog = new AlunoFormDialog(this, null);
             dialog.setVisible(true);
-            if (dialog.isConfirmado()) { alunoDAO.salvarOuAtualizar(dialog.getAluno()); atualizarListas(); }
+            if (dialog.isConfirmado()) {
+                alunoDAO.salvarOuAtualizar(dialog.getAluno());
+                selector.addSourceItem(dialog.getAluno());
+                JOptionPane.showMessageDialog(this, "Aluno criado com sucesso!");
+            }
         });
 
         btnEditar.addActionListener(e -> {
             Aluno selecionado = selector.getSelectedSourceItem();
-            if(selecionado != null) {
+            if (selecionado != null) {
                 AlunoFormDialog dialog = new AlunoFormDialog(this, selecionado);
                 dialog.setVisible(true);
-                if(dialog.isConfirmado()) { alunoDAO.salvarOuAtualizar(dialog.getAluno()); atualizarListas(); }
-            } else { JOptionPane.showMessageDialog(this, "Selecione na esquerda para editar."); }
+                if (dialog.isConfirmado()) {
+                    alunoDAO.salvarOuAtualizar(dialog.getAluno());
+                    selector.repaintLists();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um aluno na lista da esquerda para editar.");
+            }
         });
 
         btnExcluir.addActionListener(e -> {
             Aluno selecionado = selector.getSelectedSourceItem();
-            if (selecionado != null && JOptionPane.showConfirmDialog(this, "Excluir?", "Confirma", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                alunoDAO.excluir(selecionado); atualizarListas();
+            if (selecionado != null) {
+                int opt = JOptionPane.showConfirmDialog(this, "Excluir permanentemente?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                if (opt == JOptionPane.YES_OPTION) {
+                    alunoDAO.excluir(selecionado);
+                    selector.removeSourceItem(selecionado);
+                }
             }
+        });
+
+        btnLogout.addActionListener(e -> {
+            this.dispose();
+            new LoginView().setVisible(true);
         });
 
         JButton btnMatricular = new JButton("Salvar Matrículas");
@@ -83,7 +114,7 @@ public class MainApp extends JFrame {
                 a.setMatriculadoNaDisciplina(false);
                 alunoDAO.salvarOuAtualizar(a);
             }
-            JOptionPane.showMessageDialog(this, "Matrículas atualizadas com sucesso!");
+            JOptionPane.showMessageDialog(this, "Dados salvos no banco de dados!");
         });
 
         JPanel footer = new JPanel(new BorderLayout());
@@ -91,10 +122,10 @@ public class MainApp extends JFrame {
         footer.add(btnMatricular, BorderLayout.CENTER);
         add(footer, BorderLayout.SOUTH);
 
-        atualizarListas();
+        carregarListasDoBanco();
     }
 
-    private void atualizarListas() {
+    private void carregarListasDoBanco() {
         List<Aluno> todos = alunoDAO.listarTodos();
         List<Aluno> naoMatriculados = todos.stream()
                 .filter(a -> !a.isMatriculadoNaDisciplina())
@@ -118,12 +149,17 @@ public class MainApp extends JFrame {
     }
 
     public static void main(String[] args) {
-        try { UIManager.setLookAndFeel(new FlatLightLaf()); } catch (Exception ex) {}
+        try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            LOGGER.log(Level.WARNING, "Falha ao definir LookAndFeel", ex);
+        }
+
         try {
             new UsuarioDAO().criarUsuarioAdminSeNaoExistir();
             DatabaseSeeder.run();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Erro na inicialização", e);
         }
 
         SwingUtilities.invokeLater(() -> new LoginView().setVisible(true));
