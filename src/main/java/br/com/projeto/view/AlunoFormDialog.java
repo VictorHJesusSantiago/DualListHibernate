@@ -4,6 +4,7 @@ import br.com.projeto.model.Aluno;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class AlunoFormDialog extends JDialog {
@@ -18,74 +19,86 @@ public class AlunoFormDialog extends JDialog {
         super(parent, true);
         this.aluno = (alunoParaEditar == null) ? new Aluno() : alunoParaEditar;
 
-        setTitle(alunoParaEditar == null ? "Novo Aluno" : "Editar/Visualizar Aluno");
-        setSize(400, 350);
+        setTitle(alunoParaEditar == null ? "Novo Aluno" : "Editar Aluno");
+        setSize(450, 480);
         setLocationRelativeTo(parent);
-        setLayout(new GridBagLayout());
+        setLayout(new BorderLayout());
+        ((JPanel)getContentPane()).setBackground(Color.WHITE);
 
-        initUI();
+        add(createContent(), BorderLayout.CENTER);
+        add(createFooter(), BorderLayout.SOUTH);
+
         if (alunoParaEditar != null) preencherCampos();
     }
 
-    private void initUI() {
+    private JPanel createContent() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(Color.WHITE);
+        panel.setBorder(new EmptyBorder(20, 30, 20, 30));
+
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 5, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
         gbc.gridx = 0;
 
-        addLabelAndField("Nome Completo:", txtNome, gbc, 0);
-        addLabelAndField("Matrícula:", txtMatricula, gbc, 2);
-        addLabelAndField("E-mail:", txtEmail, gbc, 4);
-        addLabelAndField("Telefone:", txtTelefone, gbc, 6);
+        addInput(panel, gbc, "Nome Completo", txtNome, 0);
+        addInput(panel, gbc, "Matrícula", txtMatricula, 2);
+        addInput(panel, gbc, "E-mail Acadêmico", txtEmail, 4);
+        addInput(panel, gbc, "Telefone", txtTelefone, 6);
 
-        JPanel btnPanel = new JPanel();
-        JButton btnSalvar = new JButton("Salvar");
-        JButton btnCancelar = new JButton("Cancelar");
-
-        btnSalvar.setBackground(new Color(0, 120, 215));
-        btnSalvar.setForeground(Color.WHITE);
-        btnSalvar.putClientProperty(FlatClientProperties.STYLE, "arc: 10");
-
-        btnSalvar.addActionListener(e -> {
-            String email = txtEmail.getText().trim();
-            String telefone = txtTelefone.getText().trim();
-
-            if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-                JOptionPane.showMessageDialog(this, "E-mail inválido! Por favor verifique.", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            String telefoneLimpo = telefone.replaceAll("[^0-9]", "");
-            if (telefoneLimpo.length() < 10 || telefoneLimpo.length() > 11) {
-                JOptionPane.showMessageDialog(this, "Telefone inválido! Insira um número com DDD (10 ou 11 dígitos)", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            aluno.setNome(txtNome.getText());
-            aluno.setMatricula(txtMatricula.getText());
-            aluno.setEmail(email);
-            aluno.setTelefone(telefone);
-            confirmado = true;
-            dispose();
-        });
-
-        btnCancelar.addActionListener(e -> dispose());
-
-        btnPanel.add(btnSalvar);
-        btnPanel.add(btnCancelar);
-
-        gbc.gridy = 8;
-        add(btnPanel, gbc);
+        return panel;
     }
 
-    private void addLabelAndField(String text, JTextField field, GridBagConstraints gbc, int y) {
+    private void addInput(JPanel panel, GridBagConstraints gbc, String label, JTextField field, int y) {
         gbc.gridy = y;
-        JLabel label = new JLabel(text);
-        label.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        add(label, gbc);
+        JLabel lbl = new JLabel(label);
+        lbl.setFont(new Font("Inter", Font.BOLD, 12));
+        lbl.setForeground(new Color(55, 65, 81));
+        panel.add(lbl, gbc);
+
         gbc.gridy = y + 1;
-        add(field, gbc);
+        gbc.insets = new Insets(5, 0, 15, 0);
+        field.setPreferredSize(new Dimension(0, 35));
+        field.putClientProperty(FlatClientProperties.STYLE, "arc: 8; borderColor: #E5E7EB");
+        panel.add(field, gbc);
+        gbc.insets = new Insets(0, 0, 0, 0);
+    }
+
+    private JPanel createFooter() {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panel.setBackground(new Color(249, 250, 251));
+        panel.setBorder(new EmptyBorder(15, 20, 15, 20));
+
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBackground(Color.WHITE);
+        btnCancelar.setForeground(Color.BLACK);
+        btnCancelar.putClientProperty(FlatClientProperties.STYLE, "arc: 8; borderWidth: 1; borderColor: #D1D5DB");
+
+        JButton btnSalvar = new JButton("Salvar Dados");
+        btnSalvar.setBackground(new Color(37, 99, 235));
+        btnSalvar.setForeground(Color.WHITE);
+        btnSalvar.setFont(new Font("Inter", Font.BOLD, 13));
+        btnSalvar.putClientProperty(FlatClientProperties.STYLE, "arc: 8; borderWidth: 0");
+
+        btnCancelar.addActionListener(e -> dispose());
+        btnSalvar.addActionListener(e -> salvar());
+
+        panel.add(btnCancelar);
+        panel.add(btnSalvar);
+        return panel;
+    }
+
+    private void salvar() {
+        if (txtNome.getText().isEmpty() || txtMatricula.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nome e Matrícula são obrigatórios.");
+            return;
+        }
+        aluno.setNome(txtNome.getText());
+        aluno.setMatricula(txtMatricula.getText());
+        aluno.setEmail(txtEmail.getText());
+        aluno.setTelefone(txtTelefone.getText());
+        confirmado = true;
+        dispose();
     }
 
     private void preencherCampos() {

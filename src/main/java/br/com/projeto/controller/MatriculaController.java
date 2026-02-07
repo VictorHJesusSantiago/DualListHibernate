@@ -1,42 +1,69 @@
 package br.com.projeto.controller;
 
 import br.com.projeto.dao.AlunoDAO;
+import br.com.projeto.dao.DisciplinaDAO;
 import br.com.projeto.model.Aluno;
-import br.com.projeto.view.DualListSelector;
+import br.com.projeto.model.Disciplina;
+import br.com.projeto.model.Usuario;
 
-import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@SuppressWarnings("unused")
 public class MatriculaController {
 
     private final AlunoDAO alunoDAO;
-    private final DualListSelector<Aluno> viewSelector;
+    private final DisciplinaDAO disciplinaDAO;
 
-    public MatriculaController(DualListSelector<Aluno> viewSelector) {
-        this.viewSelector = viewSelector;
+    public MatriculaController() {
         this.alunoDAO = new AlunoDAO();
+        this.disciplinaDAO = new DisciplinaDAO();
     }
 
-    public void carregarDadosIniciais() {
-        List<Aluno> lista = alunoDAO.listarTodos();
-        if (lista.isEmpty()) {
-            alunoDAO.salvarOuAtualizar(new Aluno("João Silva", "2023001", "joao@email.com", "9999-1111", false));
-            alunoDAO.salvarOuAtualizar(new Aluno("Maria Oliveira", "2023002", "maria@email.com", "9999-2222", false));
-            alunoDAO.salvarOuAtualizar(new Aluno("Carlos Santos", "2023003", "carlos@email.com", "9999-3333", false));
-            alunoDAO.salvarOuAtualizar(new Aluno("Ana Souza", "2023004", "ana@email.com", "9999-4444", true));
-            alunoDAO.salvarOuAtualizar(new Aluno("Roberto Lima", "2023005", "beto@email.com", "9999-5555", true));
-            lista = alunoDAO.listarTodos();
-        }
-        viewSelector.setSourceItems(lista);
+    public void salvarAluno(Aluno aluno) {
+        alunoDAO.salvarOuAtualizar(aluno);
     }
 
-    public void salvarMatricula() {
-        List<Aluno> alunosMatriculados = viewSelector.getTargetItems();
-        if (alunosMatriculados.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum aluno selecionado.");
-            return;
+    public void excluirAluno(Aluno aluno) {
+        List<Disciplina> todasDisciplinas = disciplinaDAO.listarTodas();
+        for (Disciplina d : todasDisciplinas) {
+            if (d.getAlunos().contains(aluno)) {
+                d.getAlunos().remove(aluno);
+                disciplinaDAO.salvarOuAtualizar(d);
+            }
         }
-        JOptionPane.showMessageDialog(null, "Matrícula realizada com sucesso!");
+        alunoDAO.excluir(aluno);
+    }
+
+    public void criarDisciplina(String nome, Usuario usuario) {
+        Disciplina d = new Disciplina(nome, usuario);
+        disciplinaDAO.salvarOuAtualizar(d);
+    }
+
+    public void salvarMatriculas(Disciplina disciplina, List<Aluno> alunosMatriculados) {
+        disciplina.setAlunos(alunosMatriculados);
+        disciplinaDAO.salvarOuAtualizar(disciplina);
+    }
+
+    public List<Disciplina> listarDisciplinas(Usuario usuario) {
+        return disciplinaDAO.listarPorUsuario(usuario);
+    }
+
+    public List<Aluno> listarAlunosDisponiveis(Disciplina disciplina) {
+        List<Aluno> todos = alunoDAO.listarTodos();
+        if (disciplina == null) return todos;
+
+        List<Long> idsMatriculados = disciplina.getAlunos().stream()
+                .map(Aluno::getId)
+                .collect(Collectors.toList());
+
+        return todos.stream()
+                .filter(a -> !idsMatriculados.contains(a.getId()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Aluno> listarAlunosMatriculados(Disciplina disciplina) {
+        if (disciplina == null) return new ArrayList<>();
+        return disciplina.getAlunos();
     }
 }

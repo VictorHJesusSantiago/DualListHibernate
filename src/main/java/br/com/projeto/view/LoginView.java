@@ -1,160 +1,137 @@
 package br.com.projeto.view;
 
-import br.com.projeto.dao.UsuarioDAO;
+import br.com.projeto.controller.LoginController;
 import br.com.projeto.model.Usuario;
-import br.com.projeto.util.SecurityUtil;
 import br.com.projeto.MainApp;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LoginView extends JFrame {
 
-    private static final Logger LOGGER = Logger.getLogger(LoginView.class.getName());
     private final CardLayout cardLayout;
-    private final JPanel mainPanel;
-    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private final JPanel cards;
+    private final LoginController controller;
 
     public LoginView() {
+        this.controller = new LoginController();
+
         setTitle("Acesso ao Sistema");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(400, 500);
+        setSize(900, 600);
         setLocationRelativeTo(null);
-        setResizable(false);
+
+        JPanel mainContainer = new JPanel(new GridBagLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                GradientPaint gp = new GradientPaint(0, 0, new Color(59, 130, 246), getWidth(), getHeight(), new Color(147, 51, 234));
+                g2.setPaint(gp);
+                g2.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
 
         cardLayout = new CardLayout();
-        mainPanel = new JPanel(cardLayout);
+        cards = new JPanel(cardLayout);
+        cards.setOpaque(false);
 
-        mainPanel.add(createLoginPanel(), "LOGIN");
-        mainPanel.add(createRegisterPanel(), "REGISTER");
+        cards.add(createAuthPanel(true), "LOGIN");
+        cards.add(createAuthPanel(false), "REGISTER");
 
-        add(mainPanel);
+        mainContainer.add(cards);
+        add(mainContainer);
     }
 
-    private JPanel createLoginPanel() {
+    private JPanel createAuthPanel(boolean isLogin) {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.WHITE);
+        panel.setPreferredSize(new Dimension(380, 480));
+
+        panel.putClientProperty(FlatClientProperties.STYLE, "arc: 20; border: 1,1,1,1, #E5E7EB");
+        panel.setBorder(new EmptyBorder(30, 40, 30, 40));
+
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 20, 5, 20);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 0;
+        gbc.gridx = 0; gbc.weightx = 1;
 
-        JLabel title = new JLabel("Bem-vindo");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        title.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel lblTitle = new JLabel(isLogin ? "Bem-vindo" : "Criar Conta");
+        lblTitle.setFont(new Font("Inter", Font.BOLD, 28));
+        lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTitle.setForeground(new Color(31, 41, 55));
 
-        JTextField txtLogin = new JTextField();
-        txtLogin.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
-        JPasswordField txtSenha = new JPasswordField();
-        txtSenha.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");
+        JLabel lblSub = new JLabel(isLogin ? "Faça login para continuar" : "Preencha os dados abaixo");
+        lblSub.setFont(new Font("Inter", Font.PLAIN, 14));
+        lblSub.setForeground(new Color(107, 114, 128));
+        lblSub.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JButton btnEntrar = createStyledButton("Entrar", new Color(33, 150, 243));
-        JButton btnIrCadastro = new JButton("Não tem conta? Cadastre-se");
-        btnIrCadastro.setBorderPainted(false);
-        btnIrCadastro.setContentAreaFilled(false);
-        btnIrCadastro.setForeground(Color.BLUE);
-        btnIrCadastro.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        JTextField txtUser = new JTextField();
+        txtUser.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
+        txtUser.putClientProperty(FlatClientProperties.STYLE, "arc: 10; margin: 5,10,5,10");
+        txtUser.setPreferredSize(new Dimension(0, 40));
 
-        gbc.gridy = 0; panel.add(title, gbc);
-        gbc.gridy = 1; panel.add(Box.createVerticalStrut(20), gbc);
-        gbc.gridy = 2; panel.add(txtLogin, gbc);
-        gbc.gridy = 3; panel.add(txtSenha, gbc);
-        gbc.gridy = 4; panel.add(Box.createVerticalStrut(10), gbc);
-        gbc.gridy = 5; panel.add(btnEntrar, gbc);
-        gbc.gridy = 6; panel.add(btnIrCadastro, gbc);
+        JPasswordField txtPass = new JPasswordField();
+        txtPass.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");
+        txtPass.putClientProperty(FlatClientProperties.STYLE, "arc: 10; margin: 5,10,5,10; showRevealButton: true");
+        txtPass.setPreferredSize(new Dimension(0, 40));
 
-        btnIrCadastro.addActionListener(e -> cardLayout.show(mainPanel, "REGISTER"));
+        JButton btnAction = new JButton(isLogin ? "Entrar" : "Cadastrar");
+        btnAction.setBackground(new Color(37, 99, 235));
+        btnAction.setForeground(Color.WHITE);
+        btnAction.setFont(new Font("Inter", Font.BOLD, 15));
+        btnAction.putClientProperty(FlatClientProperties.STYLE, "arc: 10; borderWidth: 0");
+        btnAction.setPreferredSize(new Dimension(0, 45));
 
-        btnEntrar.addActionListener(e -> {
-            String login = txtLogin.getText();
-            String senha = new String(txtSenha.getPassword());
-            Usuario u = usuarioDAO.buscarPorLogin(login);
-            if (u != null && SecurityUtil.checkPassword(senha, u.getSenhaHash())) {
-                abrirSistemaPrincipal(u);
+        JButton btnSwitch = new JButton(isLogin ? "Não tem conta? Cadastre-se" : "Já tem conta? Entrar");
+        btnSwitch.setFont(new Font("Inter", Font.PLAIN, 13));
+        btnSwitch.setForeground(new Color(75, 85, 99));
+        btnSwitch.setContentAreaFilled(false);
+        btnSwitch.setBorderPainted(false);
+        btnSwitch.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        gbc.gridy = 0; panel.add(lblTitle, gbc);
+        gbc.gridy = 1; panel.add(lblSub, gbc);
+        gbc.gridy = 2; panel.add(Box.createVerticalStrut(30), gbc);
+        gbc.gridy = 3; panel.add(new JLabel("Usuário"), gbc);
+        gbc.gridy = 4; panel.add(txtUser, gbc);
+        gbc.gridy = 5; panel.add(Box.createVerticalStrut(15), gbc);
+        gbc.gridy = 6; panel.add(new JLabel("Senha"), gbc);
+        gbc.gridy = 7; panel.add(txtPass, gbc);
+        gbc.gridy = 8; panel.add(Box.createVerticalStrut(25), gbc);
+        gbc.gridy = 9; panel.add(btnAction, gbc);
+        gbc.gridy = 10; panel.add(Box.createVerticalStrut(10), gbc);
+        gbc.gridy = 11; panel.add(btnSwitch, gbc);
+
+        // Eventos
+        btnSwitch.addActionListener(e -> cardLayout.show(cards, isLogin ? "REGISTER" : "LOGIN"));
+
+        btnAction.addActionListener(e -> {
+            String u = txtUser.getText();
+            String p = new String(txtPass.getPassword());
+            if (isLogin) {
+                Usuario user = controller.autenticar(u, p);
+                if (user != null) {
+                    dispose();
+                    SwingUtilities.invokeLater(() -> new MainApp(user).setVisible(true));
+                } else {
+                    JOptionPane.showMessageDialog(this, "Credenciais inválidas", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Login ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                try {
+                    controller.registrarUsuario(u, p);
+                    JOptionPane.showMessageDialog(this, "Conta criada! Faça login.");
+                    cardLayout.show(cards, "LOGIN");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
+                }
             }
         });
+
         return panel;
-    }
-
-    private JPanel createRegisterPanel() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(Color.WHITE);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 20, 5, 20);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 0;
-
-        JLabel title = new JLabel("Nova Conta");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-
-        JTextField txtLogin = new JTextField();
-        txtLogin.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Escolha um Usuário");
-        JPasswordField txtSenha = new JPasswordField();
-        txtSenha.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Escolha uma Senha");
-
-        JButton btnCadastrar = createStyledButton("Criar Conta", new Color(76, 175, 80));
-        JButton btnVoltar = new JButton("Voltar ao Login");
-        btnVoltar.setBorderPainted(false);
-        btnVoltar.setContentAreaFilled(false);
-        btnVoltar.setForeground(Color.GRAY);
-
-        gbc.gridy = 0; panel.add(title, gbc);
-        gbc.gridy = 1; panel.add(Box.createVerticalStrut(20), gbc);
-        gbc.gridy = 2; panel.add(txtLogin, gbc);
-        gbc.gridy = 3; panel.add(txtSenha, gbc);
-        gbc.gridy = 4; panel.add(Box.createVerticalStrut(10), gbc);
-        gbc.gridy = 5; panel.add(btnCadastrar, gbc);
-        gbc.gridy = 6; panel.add(btnVoltar, gbc);
-
-        btnVoltar.addActionListener(e -> cardLayout.show(mainPanel, "LOGIN"));
-
-        btnCadastrar.addActionListener(e -> {
-            String login = txtLogin.getText();
-            String senha = new String(txtSenha.getPassword());
-            if (login.isEmpty() || senha.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Preencha todos os campos.");
-                return;
-            }
-            try {
-                String hash = SecurityUtil.hashPassword(senha);
-                Usuario novo = new Usuario(login, hash);
-                usuarioDAO.salvar(novo);
-                JOptionPane.showMessageDialog(this, "Conta criada com sucesso!");
-                cardLayout.show(mainPanel, "LOGIN");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Erro ao criar conta. Usuário já existe?");
-            }
-        });
-        return panel;
-    }
-
-    private JButton createStyledButton(String text, Color bg) {
-        JButton btn = new JButton(text);
-        btn.setBackground(bg);
-        btn.setForeground(Color.WHITE);
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btn.putClientProperty(FlatClientProperties.STYLE, "arc: 10; margin: 8,20,8,20; borderWidth:0");
-        return btn;
-    }
-
-    private void abrirSistemaPrincipal(Usuario usuario) {
-        this.dispose();
-        SwingUtilities.invokeLater(() -> new MainApp(usuario).setVisible(true));
-    }
-
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(new FlatLightLaf());
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Erro ao configurar LookAndFeel", e);
-        }
-        SwingUtilities.invokeLater(() -> new LoginView().setVisible(true));
     }
 }

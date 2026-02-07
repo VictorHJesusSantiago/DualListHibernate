@@ -5,24 +5,26 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "alunos")
 public class Aluno {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false) private String nome;
-    @Column(nullable = false, unique = true) private String matricula;
+    @Column(nullable = false)
+    private String nome;
+
+    @Column(nullable = false, unique = true)
+    private String matricula;
+
     private String email;
     private String telefone;
 
-    private boolean matriculadoNaDisciplina = false;
-
     public Aluno() {}
 
-    public Aluno(String nome, String matricula, String email, String telefone, boolean matriculadoNaDisciplina) {
+    public Aluno(String nome, String matricula, String email, String telefone) {
         this.nome = nome;
         this.matricula = matricula;
         this.email = email;
         this.telefone = telefone;
-        this.matriculadoNaDisciplina = matriculadoNaDisciplina;
     }
 
     public Long getId() { return id; }
@@ -36,8 +38,19 @@ public class Aluno {
     public String getTelefone() { return telefone; }
     public void setTelefone(String telefone) { this.telefone = telefone; }
 
-    public boolean isMatriculadoNaDisciplina() { return matriculadoNaDisciplina; }
-    public void setMatriculadoNaDisciplina(boolean matriculadoNaDisciplina) { this.matriculadoNaDisciplina = matriculadoNaDisciplina; }
+    @Override
+    public String toString() { return matricula + " - " + nome; }
 
-    @Override public String toString() { return matricula + " - " + nome; }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Aluno aluno = (Aluno) o;
+        return id != null && id.equals(aluno.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
