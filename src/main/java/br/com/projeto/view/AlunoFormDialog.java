@@ -58,7 +58,7 @@ public class AlunoFormDialog extends JDialog {
 
             String telefoneLimpo = telefone.replaceAll("[^0-9]", "");
             if (telefoneLimpo.length() < 10 || telefoneLimpo.length() > 11) {
-                JOptionPane.showMessageDialog(this, "Telefone inválido! Insira um número com DDD (10 ou 11 dígitos).", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Telefone inválido! Insira um número com DDD (10 ou 11 dígitos)", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
