@@ -63,7 +63,7 @@ Siga os passos abaixo para executar a aplicação em sua máquina local.
 
 1.  **Clone o repositório** (ou baixe o ZIP):
     ```bash
-    git clone [https://github.com/seu-usuario/DualListHibernate.git](https://github.com/seu-usuario/DualListHibernate.git)
+    git clone [https://github.com/VictorHJesusSantiago/DualListHibernate.git](https://github.com/VictorHJesusSantiago/DualListHibernate.git)
     ```
 
 2.  **Abra o projeto na IDE:**
@@ -106,8 +106,8 @@ A lógica do sistema foi modelada para garantir consistência nas matrículas e 
       <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
         <td style="padding: 12px 15px;">RN-001</td>
         <td style="padding: 12px 15px;">Sistema</td>
-        <td style="padding: 12px 15px;">A matrícula de um aluno é definida por um estado booleano (`matriculado = true`) persistido no banco.</td>
-        <td style="padding: 12px 15px;">Simplicidade e eficiência na query de separação das listas.</td>
+        <td style="padding: 12px 15px;">A matrícula associa um aluno a uma disciplina específica através de uma tabela de relacionamento (Many-to-Many).</td>
+        <td style="padding: 12px 15px;">Permite que o aluno esteja em múltiplas disciplinas simultaneamente.</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd;">
         <td style="padding: 12px 15px;">RN-002</td>
@@ -130,7 +130,7 @@ A lógica do sistema foi modelada para garantir consistência nas matrículas e 
       <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
         <td style="padding: 12px 15px;">RN-005</td>
         <td style="padding: 12px 15px;">Usuário</td>
-        <td style="padding: 12px 15px;">A exclusão de um aluno é permanente e remove o registro do banco de dados.</td>
+        <td style="padding: 12px 15px;">A exclusão de um aluno é permanente e remove o registro do banco de dados e suas associações.</td>
         <td style="padding: 12px 15px;">Limpeza de dados (Hard Delete) conforme requisito da atividade.</td>
       </tr>
     </tbody>
@@ -170,7 +170,7 @@ A lógica do sistema foi modelada para garantir consistência nas matrículas e 
       <tr style="border-bottom: 1px solid #ddd;">
         <td style="padding: 12px 15px;">RF-004</td>
         <td style="padding: 12px 15px;">Matrícula</td>
-        <td style="padding: 12px 15px;">Ao clicar em "Finalizar Matrícula", o status dos alunos deve ser salvo no banco.</td>
+        <td style="padding: 12px 15px;">Ao clicar em "Salvar", as associações entre aluno e disciplina atual devem ser persistidas.</td>
         <td style="padding: 12px 15px;">Essencial</td>
       </tr>
       <tr style="border-bottom: 1px solid #ddd; background-color: #f9f9f9;">
@@ -347,7 +347,7 @@ A aplicação, embora acadêmica, implementa conceitos reais de segurança da in
 
 * **Componente Genérico:** A classe `DualListSelector<T>` foi projetada usando **Generics**. Isso significa que ela não serve apenas para "Alunos". Com poucas linhas, ela poderia ser reutilizada para selecionar "Produtos", "Funcionários" ou qualquer outra entidade do sistema.
 * **Custom Renderer:** Para exibir o ícone do "bonequinho" na lista, não usamos imagens fixas. Implementamos um `ListCellRenderer` personalizado que desenha o ícone vetorialmente via código (Java 2D API), garantindo que ele nunca fique pixelado ou dependa de arquivos externos.
-* **Seeder Automático:** A classe `DatabaseSeeder` verifica a cada inicialização se o banco está vazio. Se estiver, gera 1.100 alunos com nomes aleatórios e matricula 100 deles automaticamente, facilitando testes de carga e visualização.
+* **Seeder Automático:** A classe `DatabaseSeeder` verifica a cada inicialização se o banco está vazio. Se estiver, gera alunos com nomes aleatórios para popular a base de dados, facilitando testes de carga e visualização.
 
 ---
 
