@@ -107,7 +107,6 @@ public class LoginView extends JFrame {
         gbc.gridy = 10; panel.add(Box.createVerticalStrut(10), gbc);
         gbc.gridy = 11; panel.add(btnSwitch, gbc);
 
-        // Eventos
         btnSwitch.addActionListener(e -> cardLayout.show(cards, isLogin ? "REGISTER" : "LOGIN"));
 
         btnAction.addActionListener(e -> {

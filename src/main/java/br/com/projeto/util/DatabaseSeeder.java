@@ -32,7 +32,6 @@ public class DatabaseSeeder {
                 try {
                     dao.salvarOuAtualizar(aluno);
                 } catch (Exception ignored) {
-                    // Ignora duplicações de matrícula geradas aleatoriamente
                 }
             }
             System.out.println(">>> SEEDER EXECUTADO: Alunos aleatórios inseridos.");

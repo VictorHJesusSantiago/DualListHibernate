@@ -95,7 +95,7 @@ public class MainApp extends JFrame {
         JButton btnNovoAluno = createButton("Novo Aluno", PRIMARY_COLOR, true);
         JButton btnEditar = createButton("Editar", new Color(255, 255, 255), false);
         JButton btnExcluir = createButton("Excluir", new Color(254, 226, 226), false);
-        btnExcluir.setForeground(new Color(220, 38, 38)); // Texto Vermelho
+        btnExcluir.setForeground(new Color(220, 38, 38));
 
         JButton btnLogout = createButton("Sair", new Color(75, 85, 99), true);
 
@@ -160,7 +160,7 @@ public class MainApp extends JFrame {
 
         JButton btnSalvar = new JButton("Salvar Alterações de Matrícula");
         btnSalvar.setFont(new Font("Inter", Font.BOLD, 14));
-        btnSalvar.setBackground(new Color(16, 185, 129)); // Verde Esmeralda
+        btnSalvar.setBackground(new Color(16, 185, 129));
         btnSalvar.setForeground(Color.WHITE);
         btnSalvar.setPreferredSize(new Dimension(300, 45));
         btnSalvar.putClientProperty(FlatClientProperties.STYLE,
