@@ -1,659 +1,816 @@
 <div align="center">
-  <br />
-  <img src="https://cdn-icons-png.flaticon.com/512/226/226777.png" alt="Logo do Projeto" width="120" style="border-radius: 10%;">
 
-  <h1>🎓 Sistema de Matrícula Acadêmica</h1>
+**🌐 Choose Language / Selecione o Idioma / Elija el Idioma**
 
-  <strong style="font-size: 1.2em;">
-    Componente de Seleção em Lista Dupla (Dual List) com Persistência Hibernate
-  </strong>
+[![🇺🇸 English](https://img.shields.io/badge/🇺🇸%20English-README.md-005CA5?style=for-the-badge)](README.md)&nbsp;&nbsp;&nbsp;[![🇧🇷 Português](https://img.shields.io/badge/🇧🇷%20Português-Atual-009C3B?style=for-the-badge)](README_PT.md)&nbsp;&nbsp;&nbsp;[![🇪🇸 Español](https://img.shields.io/badge/🇪🇸%20Español-README__ES.md-C60B1E?style=for-the-badge)](README_ES.md)
 
-  <br /><br />
-
-  <p style="max-width: 700px;">
-    Uma solução desktop robusta desenvolvida em <strong>Java Swing</strong> sob a arquitetura <strong>MVC</strong>. O projeto foca na implementação de um componente visual reutilizável para seleção de itens e na persistência de dados utilizando <strong>Hibernate ORM</strong>.
-  </p>
-
-  <p>
-    <img src="https://img.shields.io/badge/status-conclu%C3%ADdo-brightgreen?style=for-the-badge" alt="Status do Projeto">
-    <img src="https://img.shields.io/badge/Java-23-ED8B00?style=for-the-badge&logo=openjdk" alt="Versão do Java">
-    <img src="https://img.shields.io/badge/Hibernate-6.4.1-59666C?style=for-the-badge&logo=hibernate" alt="Versão do Hibernate">
-    <img src="https://img.shields.io/badge/H2_Database-InMemory-blue?style=for-the-badge" alt="Banco de Dados">
-  </p>
-
-  <p>
-    🌐 <strong>Choose Language / Selecione o idioma / Elija el idioma</strong><br/><br/>
-    <a href="README.md"><img src="https://img.shields.io/badge/ENGLISH-README.MD-blue?style=for-the-badge" alt="English"></a>
-    <a href="README_PT.md"><img src="https://img.shields.io/badge/PORTUGUÊS-CURRENT-009c3b?style=for-the-badge" alt="Português"></a>
-    <a href="README_ES.md"><img src="https://img.shields.io/badge/ESPAÑOL-README__ES.MD-ffd700?style=for-the-badge" alt="Español"></a>
-  </p>
 </div>
 
 ---
 
-## 📖 Sobre o Projeto
+<div align="center">
 
-O **Sistema de Matrícula Acadêmica** é uma aplicação desktop desenvolvida para demonstrar competências avançadas em Programação Orientada a Objetos e arquitetura **MVC**. Sua funcionalidade central é um componente reutilizável "Dual List Selector" usado para matricular alunos em disciplinas, com persistência via **Hibernate** e banco de dados embutido **H2**.
+```
+██████╗ ██╗   ██╗ █████╗ ██╗     ██╗     ██╗███████╗████████╗
+██╔══██╗██║   ██║██╔══██╗██║     ██║     ██║██╔════╝╚══██╔══╝
+██║  ██║██║   ██║███████║██║     ██║     ██║███████╗   ██║
+██║  ██║██║   ██║██╔══██║██║     ██║     ██║╚════██║   ██║
+██████╔╝╚██████╔╝██║  ██║███████╗███████╗██║███████║   ██║
+╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚══════╝   ╚═╝
+     Gerenciador de Matrículas em Swing + Hibernate com UI de Lista Dupla
+```
+
+---
+
+[![Java](https://img.shields.io/badge/Java-23%20(Preview)-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![Hibernate](https://img.shields.io/badge/Hibernate-6.4.1-59666C?style=for-the-badge&logo=hibernate&logoColor=white)](https://hibernate.org/)
+[![H2](https://img.shields.io/badge/Banco%20de%20Dados-H2%20Embarcado-1F305F?style=for-the-badge)](https://www.h2database.com/)
+[![Swing](https://img.shields.io/badge/UI-Java%20Swing-4E9A06?style=for-the-badge)]()
+[![FlatLaf](https://img.shields.io/badge/Tema-FlatLaf%203.2.5-2563EB?style=for-the-badge)](https://www.formdev.com/flatlaf/)
+[![BCrypt](https://img.shields.io/badge/Auth-Hash%20BCrypt-8B5CF6?style=for-the-badge)]()
+[![Maven](https://img.shields.io/badge/Build-Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)](https://maven.apache.org/)
+
+<br/>
+
+> **Um gerenciador de matrículas desktop onde mover um aluno entre duas listas**
+> *é* o próprio ato de matriculá-lo ou desmatriculá-lo, apoiado em Hibernate ORM sobre um banco H2 embarcado.
+
+<br/>
+
+![Entidades](https://img.shields.io/badge/Entidades%20JPA-3-59666C?style=flat-square)
+![DAOs](https://img.shields.io/badge/Classes%20DAO-3-ED8B00?style=flat-square)
+![Views](https://img.shields.io/badge/Views%20Swing-3-4E9A06?style=flat-square)
+![Genérico](https://img.shields.io/badge/DualListSelector-Genérico%20%3CT%3E-2563EB?style=flat-square)
+![Auth](https://img.shields.io/badge/Ações%20em%20Massa-Protegidas%20por%20Admin-8B5CF6?style=flat-square)
+
+</div>
+
+---
 
 ## 📑 Sumário
 
-- 📋 Requisitos (Funcionais, Não Funcionais, Regras de Negócio, Domínio, Dados, Interface)
-- 🎭 Casos de Uso
-- 🔗 Matriz de Rastreabilidade de Requisitos
-- 📄 Documento de Especificação de Requisitos de Software (SRS)
-- 📊 Diagramas UML e Estruturais (Casos de Uso, Classes, Sequência, Componentes, Implantação, Máquina de Estados)
-- 🗄️ Modelo de Dados e Dicionário de Dados (Conceitual / Lógico / Físico / DER)
-- 🔀 Diagrama de Fluxo de Dados (DFD)
-- 🏗️ Diagrama de Arquitetura e Fluxograma
-- 👤 Persona e Mapa de Jornada do Usuário
-- 🖼️ Wireframes e Mockups
-- 🚀 Instalação e Execução
-- 👨‍💻 Autor
+<details>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
+
+<table>
+<tr>
+<td valign="top" width="50%">
+
+**🏗️ Sistema**
+- [Visão Geral](#-visão-geral)
+- [Arquitetura do Sistema](#️-arquitetura-do-sistema)
+- [Stack Tecnológica](#️-stack-tecnológica)
+- [Padrões de Projeto](#-padrões-de-projeto-aplicados)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+
+**📦 Módulos**
+- [MainApp — Shell](#️-mainapp--shell-da-aplicação)
+- [LoginView — Autenticação](#-loginview--tela-de-autenticação)
+- [DualListSelector — UI Genérica](#-duallistselector--widget-genérico-de-lista-dupla)
+- [MatriculaController — Orquestração](#-matriculacontroller--orquestração-de-matrículas)
+- [Camada DAO](#️-camada-dao--alunodao-disciplinadao-usuariodao)
+- [SecurityUtil — Hashing](#-securityutil--hash-de-senha)
+- [HibernateUtil / DatabaseSeeder](#️-hibernateutil--databaseseeder)
+
+</td>
+<td valign="top" width="50%">
+
+**💼 Negócio**
+- [Regras de Negócio](#-regras-de-negócio)
+- [Requisitos Funcionais](#-requisitos-funcionais)
+- [Requisitos Não Funcionais](#-requisitos-não-funcionais)
+
+**📐 Design**
+- [Modelo de Dados](#️-modelo-de-dados)
+- [Fluxos do Sistema](#-fluxos-do-sistema)
+- [Fluxo de Login](#fluxo-de-login)
+- [Fluxo de Matrícula](#fluxo-de-matrícula)
+- [Fluxo de Autorização de Movimentação em Massa](#fluxo-de-autorização-de-movimentação-em-massa)
+
+**🔐 Segurança & Operação**
+- [Segurança](#-segurança)
+- [Instalação & Execução](#-instalação--execução)
+- [Testes Automatizados](#-testes-automatizados)
+- [Métricas & Monitoramento](#-métricas--monitoramento)
+- [Limitações Conhecidas](#️-limitações-conhecidas)
+
+</td>
+</tr>
+</table>
 
 ---
-
-<details>
-<summary>
-
-## 📋 1. Requisitos
-
-</summary>
-
-### ✅ Requisitos Funcionais (RF)
-
-| ID | Módulo | Descrição | Prioridade |
-|---|---|---|---|
-| RF-001 | Autenticação | O sistema deve permitir login e cadastro de contas de administrador. | Essencial |
-| RF-002 | Gestão de Alunos | O sistema deve permitir criar, editar e excluir alunos (CRUD). | Essencial |
-| RF-003 | Matrícula | O usuário deve poder mover alunos entre as listas "Disponíveis" e "Matriculados". | Essencial |
-| RF-004 | Matrícula | Ao clicar em "Salvar", a associação entre aluno e disciplina deve ser persistida. | Essencial |
-| RF-005 | Interface | A lista deve exibir um ícone (avatar) ao lado do nome do aluno. | Média |
-| RF-006 | Gestão de Disciplinas | O sistema deve permitir que o usuário autenticado crie disciplinas de sua propriedade. | Alta |
-| RF-007 | Seed de Dados | Na primeira execução, o sistema deve popular o banco com alunos de exemplo e um usuário admin padrão. | Média |
-
-### ⚡ Requisitos Não Funcionais (RNF)
-
-| ID | Atributo | Descrição |
-|---|---|---|
-| RNF-001 | Usabilidade | A interface deve utilizar o tema FlatLaf para visual moderno e responsivo. |
-| RNF-002 | Portabilidade | O banco de dados deve ser H2 embutido, sem necessidade de instalação externa. |
-| RNF-003 | Manutenibilidade | O código deve seguir estritamente o padrão MVC e usar Generics no componente visual. |
-| RNF-004 | Segurança | Senhas nunca devem ser armazenadas em texto plano (hash BCrypt). |
-| RNF-005 | Confiabilidade | Operações de escrita devem ser atômicas, com transações Hibernate e rollback em falhas. |
-| RNF-006 | Performance | A lista de alunos deve renderizar com fluidez com mais de 1.000 registros via `ListCellRenderer` customizado. |
-
-### 📜 Regras de Negócio (RN)
-
-| ID | Ator | Regra | Justificativa |
-|---|---|---|---|
-| RN-001 | Sistema | Uma matrícula associa um aluno a uma disciplina via tabela de relacionamento N:N. | Permite que o aluno esteja em múltiplas disciplinas. |
-| RN-002 | Sistema | Na primeira execução, se não houver usuários, cria-se automaticamente `admin` / `1234`. | Garante acesso imediato sem configuração manual. |
-| RN-003 | Usuário | O campo "Matrícula" do aluno deve ser único. | Garante a unicidade do registro acadêmico. |
-| RN-004 | Sistema | Senhas de novos usuários devem ser criptografadas via BCrypt antes da persistência. | Segurança básica contra vazamento de dados. |
-| RN-005 | Usuário | A exclusão de um aluno é permanente e remove suas matrículas. | Hard delete conforme escopo da atividade. |
-| RN-006 | Sistema | Uma disciplina sempre pertence ao usuário (Usuario) que a criou. | Define o limite de propriedade em cenários multiusuário. |
-
-### 🌐 Requisitos de Domínio
-
-- O sistema modela um domínio acadêmico simplificado: **Usuários (administradores)**, **Disciplinas**, **Alunos** e **Matrículas**.
-- A "Matrícula" não é uma entidade de primeira classe na UI — é representada pela presença de um `Aluno` na coleção de uma `Disciplina`.
-- O vocabulário do domínio está em português no código (`Aluno`, `Disciplina`, `Usuario`, `Matricula`), refletindo o idioma nativo da instituição.
-
-### 🗃️ Requisitos de Dados
-
-- O registro de aluno requer: nome completo, matrícula única, e-mail e telefone.
-- O registro de usuário requer: login único e senha em hash (nunca em texto plano).
-- O registro de disciplina requer: nome e usuário proprietário.
-- A relação de matrícula requer apenas o par (ID da disciplina, ID do aluno).
-
-### 🖥️ Requisitos de Interface
-
-- A tela de login deve validar credenciais e exibir feedback visual de erro.
-- A tela principal deve apresentar duas listas sincronizadas ("Disponíveis" / "Matriculados") com botões de movimentação.
-- Os formulários (Adicionar/Editar Aluno) devem validar campos obrigatórios antes de habilitar "Salvar".
-- A interface deve usar um Look & Feel moderno e consistente (FlatLaf) em todas as janelas.
 
 </details>
 
----
+## 🌟 Visão Geral
 
 <details>
-<summary>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
 
-## 🎭 2. Casos de Uso
+**DualListHibernate** é uma aplicação desktop em Java Swing que gerencia a matrícula de alunos em cursos ("disciplinas") através de um **widget de transferência de lista dupla**: os alunos disponíveis ficam em uma lista à esquerda, os matriculados ficam em uma lista à direita, e botões de seta únicos ou em massa movem os itens entre elas. Salvar simplesmente persiste o que ficou do lado direito como o corpo discente matriculado do curso — o estado da UI *é* o estado do domínio até que o botão salvar o confirme.
 
-</summary>
+A persistência roda através do **Hibernate ORM 6** contra um banco **H2** embarcado, com três entidades JPA — `Usuario`, `Disciplina`, `Aluno` — conectadas por um relacionamento um-para-muitos (o usuário é dono dos cursos) e muitos-para-muitos (o curso matricula alunos). Uma camada DAO leve envolve o boilerplate de `Session` do Hibernate, e um `MatriculaController` fica entre as views Swing e os DAOs, mantendo as preocupações de persistência fora do código de UI.
 
-| ID | Caso de Uso | Ator Principal | Descrição |
-|---|---|---|---|
-| UC-01 | Login | Administrador | Autenticar-se com login e senha para acessar o sistema. |
-| UC-02 | Cadastrar Conta | Visitante | Criar uma nova conta de administrador com senha em hash. |
-| UC-03 | Gerenciar Alunos (CRUD) | Administrador | Criar, editar, visualizar e excluir registros de alunos. |
-| UC-04 | Gerenciar Disciplinas | Administrador | Criar disciplinas de propriedade do usuário logado. |
-| UC-05 | Matricular / Desmatricular Alunos | Administrador | Mover alunos entre as listas "Disponíveis" e "Matriculados" e persistir o resultado. |
+O acesso é protegido por uma tela de login apoiada em hash de senha com **BCrypt**, e operações destrutivas em massa (mover *todos* os alunos de uma vez) exigem que a senha do admin logado seja reinserida antes de prosseguir.
 
-### Diagrama de Casos de Uso
+### 🎯 Objetivos do Sistema
 
-```mermaid
-graph LR
-    Admin([👤 Administrador])
-    Visitante([👤 Visitante])
+| Objetivo | Descrição |
+|----------|-----------|
+| 🔄 **Matrícula em lista dupla** | Representar "matriculado" vs. "disponível" como duas listas conectadas por setas de transferência |
+| 🎓 **Gestão de cursos** | Permitir que um usuário autenticado crie cursos e escope a matrícula a eles |
+| 👤 **CRUD de alunos** | Criar, editar e excluir registros de alunos através de um diálogo modal |
+| 🔐 **Acesso autenticado** | Exigir login antes que qualquer tela de matrícula seja alcançável |
+| 🛡️ **Confirmação de ação em massa** | Exigir reentrada de senha antes de mover uma lista inteira de uma vez |
+| 🗄️ **Persistência apoiada em ORM** | Modelar o domínio como entidades JPA mapeadas pelo Hibernate em tabelas H2 |
+| 🌱 **Dados iniciais determinísticos** | Semear um usuário admin e dados de demonstração automaticamente na primeira execução |
+| 🎨 **Visual desktop moderno** | Renderizar com o tema Mac Light do FlatLaf em vez do visual padrão do Swing |
 
-    UC1((UC-01 Login))
-    UC2((UC-02 Cadastrar Conta))
-    UC3((UC-03 Gerenciar Alunos))
-    UC4((UC-04 Gerenciar Disciplinas))
-    UC5((UC-05 Matricular / Desmatricular))
-
-    Visitante --- UC2
-    Admin --- UC1
-    Admin --- UC3
-    Admin --- UC4
-    Admin --- UC5
-    UC5 -. includes .-> UC3
-    UC5 -. includes .-> UC4
-```
+---
 
 </details>
 
----
+## 🏗️ Arquitetura do Sistema
 
 <details>
-<summary>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
 
-## 🔗 3. Matriz de Rastreabilidade de Requisitos
+### Diagrama de Módulos
 
-</summary>
+```mermaid
+flowchart TB
+    subgraph BOOT["🚀  BOOTSTRAP"]
+        MAIN["MainApp.main()\n─────────────\nFlatMacLightLaf.setup()\nUsuarioDAO semeia admin\nDatabaseSeeder.run()"]
+    end
 
-| Requisito | Caso de Uso | Diagrama(s) | Componente |
-|---|---|---|---|
-| RF-001 / RN-002 | UC-01 Login | Sequência, Máquina de Estados | `LoginController`, `UsuarioDAO` |
-| RF-001 / RN-004 | UC-02 Cadastrar Conta | Classes, Máquina de Estados | `LoginController`, `SecurityUtil` |
-| RF-002 / RN-003 / RN-005 | UC-03 Gerenciar Alunos | Classes, DER | `AlunoFormDialog`, `AlunoDAO` |
-| RF-006 / RN-006 | UC-04 Gerenciar Disciplinas | Classes, DER | `MatriculaController`, `DisciplinaDAO` |
-| RF-003 / RF-004 / RN-001 | UC-05 Matricular / Desmatricular | Sequência, Componentes, Fluxograma | `DualListSelector`, `MatriculaController`, `DisciplinaDAO` |
-| RF-005 | UC-03 | Wireframe / Mockup | `DualListSelector` (renderer customizado) |
-| RNF-002 / RNF-004 / RNF-005 | UC-01..05 | Implantação, Arquitetura | `HibernateUtil`, `SecurityUtil` |
+    subgraph UI["🖥️  VIEWS SWING"]
+        direction LR
+        LOGIN["🔐 LoginView\n─────────────\ncampos login + senha\nverificação BCrypt"]
+        APP["🏛️ MainApp (JFrame)\n─────────────\nnavbar · combo de curso\nbotão salvar no rodapé"]
+        FORM["📝 AlunoFormDialog\n─────────────\ncriar/editar aluno\nmodal"]
+        DLS["🔀 DualListSelector&lt;T&gt;\n─────────────\nwidget genérico de transferência\nJList origem/destino"]
+    end
+
+    subgraph CTRL["🎮  CONTROLADOR"]
+        MC["MatriculaController\n─────────────────────\nsalvarAluno · excluirAluno\ncriarDisciplina · salvarMatriculas\nlistarAlunosDisponiveis/Matriculados"]
+    end
+
+    subgraph DAO["🗄️  CAMADA DAO"]
+        direction LR
+        ADAO["AlunoDAO"]
+        DDAO["DisciplinaDAO"]
+        UDAO["UsuarioDAO"]
+    end
+
+    subgraph ORM["⚙️  PERSISTÊNCIA"]
+        HU["HibernateUtil\n─────────────\nSessionFactory\nsingleton"]
+        DB[("🗄️ Banco H2\n─────────────\nalunos · disciplinas\nusuarios · matriculas")]
+    end
+
+    subgraph SEC["🔐  SEGURANÇA"]
+        SU["SecurityUtil\n─────────────\nBCrypt.hashpw\nBCrypt.checkpw"]
+    end
+
+    MAIN --> LOGIN
+    LOGIN -->|"credenciais válidas"| APP
+    LOGIN --> SU
+    APP --> DLS
+    APP --> FORM
+    APP --> MC
+    DLS -->|"confirmação de movimento em massa"| SU
+    MC --> ADAO & DDAO
+    LOGIN --> UDAO
+    ADAO & DDAO & UDAO --> HU --> DB
+
+    style BOOT fill:#1e3a5f,color:#fff,stroke:#4a90d9
+    style UI fill:#1a3a1a,color:#fff,stroke:#4caf50
+    style CTRL fill:#3a1a1a,color:#fff,stroke:#e57373
+    style DAO fill:#3a2a1a,color:#fff,stroke:#ffb74d
+    style ORM fill:#2a1a3a,color:#fff,stroke:#ce93d8
+    style SEC fill:#3a1a2a,color:#fff,stroke:#f06292
+```
+
+### Camadas da Arquitetura
+
+```mermaid
+flowchart LR
+    subgraph L1["🖥️ Apresentação"]
+        A1["Views Swing\ntema FlatLaf"]
+    end
+    subgraph L2["🎮 Controlador"]
+        B1["MatriculaController"]
+    end
+    subgraph L3["🗄️ Acesso a Dados"]
+        C1["3 DAOs\nsessão por chamada"]
+    end
+    subgraph L4["💾 Persistência"]
+        D1["SessionFactory Hibernate"]
+        D2["Banco H2 embarcado"]
+    end
+
+    L1 --> L2 --> L3 --> L4
+
+    style L1 fill:#1565C0,color:#fff
+    style L2 fill:#2E7D32,color:#fff
+    style L3 fill:#6A1B9A,color:#fff
+    style L4 fill:#BF360C,color:#fff
+```
+
+---
 
 </details>
 
----
+## 🛠️ Stack Tecnológica
 
 <details>
-<summary>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
 
-## 📄 4. Documento de Especificação de Requisitos de Software (SRS)
+<table>
+<thead>
+<tr>
+<th>Camada</th>
+<th>Tecnologia</th>
+<th>Versão</th>
+<th>Finalidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>🧠 Linguagem</strong></td>
+<td>Java</td>
+<td>23 (recursos preview habilitados)</td>
+<td>Aplicação inteira, compilada com <code>--enable-preview</code></td>
+</tr>
+<tr>
+<td rowspan="2"><strong>🗄️ Persistência</strong></td>
+<td>Hibernate ORM</td>
+<td>6.4.1.Final</td>
+<td>Implementação JPA, mapeamento de entidades, gerenciamento de sessão</td>
+</tr>
+<tr>
+<td>Banco H2</td>
+<td>2.2.224</td>
+<td>Armazenamento relacional embarcado, em arquivo/memória</td>
+</tr>
+<tr>
+<td rowspan="2"><strong>🎨 UI</strong></td>
+<td>Java Swing</td>
+<td>embutido no JDK</td>
+<td>Janelas, diálogos, listas, gerenciadores de layout</td>
+</tr>
+<tr>
+<td>FlatLaf</td>
+<td>3.2.5</td>
+<td>Look &amp; Feel moderno (Mac Light), componentes arredondados via <code>FlatClientProperties.STYLE</code></td>
+</tr>
+<tr>
+<td><strong>🔐 Segurança</strong></td>
+<td>jBCrypt</td>
+<td>0.4</td>
+<td>Hash de senha (<code>gensalt(12)</code>) e verificação</td>
+</tr>
+<tr>
+<td rowspan="2"><strong>🔧 Build</strong></td>
+<td>Maven</td>
+<td>—</td>
+<td><code>pom.xml</code>, projeto de módulo único</td>
+</tr>
+<tr>
+<td>maven-compiler-plugin</td>
+<td>3.11.0</td>
+<td>Compila com <code>source</code>/<code>target</code> 23 e flag de preview</td>
+</tr>
+</tbody>
+</table>
 
-</summary>
-
-### 4.1 Propósito
-
-Este documento especifica o comportamento funcional e não funcional do Sistema de Matrícula Acadêmica, uma aplicação desktop para gerenciamento de alunos, disciplinas e matrículas.
-
-### 4.2 Escopo
-
-O sistema cobre: autenticação de administradores, CRUD de alunos, criação de disciplinas e gerenciamento de matrículas via interface dual-list. Não cobre notas, frequência ou suporte multi-instituição.
-
-### 4.3 Descrição Geral
-
-- **Perspectiva do produto:** aplicação desktop Java Swing standalone com banco H2 embutido — sem servidor externo.
-- **Classes de usuário:** um único papel, *Administrador* (criado via cadastro, ou seedado como `admin` / `1234`).
-- **Ambiente operacional:** Windows, Linux ou macOS com Java 23+ instalado.
-- **Restrições:** separação MVC estrita; componente de UI genérico e reutilizável (`DualListSelector<T>`).
-
-### 4.4 Requisitos Específicos
-
-Veja [§1 Requisitos](#-1-requisitos) para a lista completa de RF / RNF / RN, e [§2 Casos de Uso](#-2-casos-de-uso) para as especificações comportamentais.
-
-### 4.5 Requisitos de Interface Externa
-
-- **UI:** Swing + FlatLaf, descrita em [§9 Wireframes e Mockups](#-9-wireframes-e-mockups).
-- **Dados:** banco H2 embutido via Hibernate, descrito em [§6 Modelo de Dados](#-6-modelo-de-dados-e-dicionário-de-dados).
-- **Hardware:** nenhum requisito especial além de um desktop/notebook capaz de executar uma JVM.
+---
 
 </details>
 
----
+## 🎨 Padrões de Projeto Aplicados
 
 <details>
-<summary>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
 
-## 📊 5. Diagramas UML e Estruturais
+| Padrão | Onde | Justificativa |
+|--------|------|----------------|
+| 🧭 **Camadas estilo MVC** | Views (`MainApp`, `LoginView`, `AlunoFormDialog`) → Controlador (`MatriculaController`) → DAO → Hibernate | A UI nunca toca o Hibernate diretamente; toda chamada de persistência é mediada |
+| 🔀 **Widget Genérico** | `DualListSelector<T>` | A mecânica de lista de transferência é escrita uma vez e reutilizada para qualquer lista de `T`, sem fixar em `Aluno` |
+| 🏭 **Padrão DAO** | `AlunoDAO`, `DisciplinaDAO`, `UsuarioDAO` | Cada entidade recebe um gateway de persistência pequeno e focado |
+| 🔂 **Singleton** | `HibernateUtil` — uma `SessionFactory` para todo o ciclo de vida do processo | Evita o custo de reconstruir o modelo de metadados do Hibernate a cada chamada |
+| 🧱 **Renderizador de Célula Customizado** | `ModernStudentRenderer` dentro de `DualListSelector` | Desacopla "como um aluno aparece em uma lista" do próprio widget de lista |
+| 🚦 **Confirmação de Guarda** | `checkAuth()` antes de `moveAll()` | Ações em massa de alto impacto exigem uma etapa explícita de reautenticação |
+| 🌱 **Semeadura na Inicialização** | `UsuarioDAO.criarUsuarioAdminSeNaoExistir()` + `DatabaseSeeder.run()` | A aplicação é executável a partir de um banco limpo, sem configuração manual |
+| 🎨 **Estilização por Client-Property** | Strings `FlatClientProperties.STYLE` por toda a view | Ajustes visuais por componente (arco, borda, hover) sem criar subclasses de componentes Swing |
 
-</summary>
-
-### Diagrama de Classes
-
-```mermaid
-classDiagram
-    class Aluno {
-      -Long id
-      -String nome
-      -String matricula
-      -String email
-      -String telefone
-    }
-    class Disciplina {
-      -Long id
-      -String nome
-      -Usuario usuario
-      -List~Aluno~ alunos
-    }
-    class Usuario {
-      -Long id
-      -String login
-      -String senhaHash
-      -List~Disciplina~ disciplinas
-    }
-    class AlunoDAO {
-      +findAll() List~Aluno~
-      +save(Aluno)
-      +delete(Aluno)
-    }
-    class DisciplinaDAO {
-      +findById(Long) Disciplina
-      +update(Disciplina)
-    }
-    class UsuarioDAO {
-      +findByLogin(String) Usuario
-      +save(Usuario)
-    }
-    class DualListSelector~T~ {
-      -List~T~ disponiveis
-      -List~T~ selecionados
-      +moverParaDireita()
-      +moverParaEsquerda()
-    }
-    class MatriculaController {
-      +carregarDisciplina(Long)
-      +salvarMatricula()
-    }
-    class LoginController {
-      +autenticar(String, String) boolean
-      +registrar(String, String) Usuario
-    }
-
-    Usuario "1" --> "0..*" Disciplina : possui
-    Disciplina "0..*" -- "0..*" Aluno : matricula
-    MatriculaController ..> DisciplinaDAO : usa
-    MatriculaController ..> DualListSelector : controla
-    LoginController ..> UsuarioDAO : usa
-    AlunoDAO ..> Aluno
-    DisciplinaDAO ..> Disciplina
-    UsuarioDAO ..> Usuario
-```
-
-### Diagrama de Sequência — Matricular Aluno
-
-```mermaid
-sequenceDiagram
-    actor Admin as Administrador
-    participant View as MainView (DualListSelector)
-    participant Ctrl as MatriculaController
-    participant DAO as DisciplinaDAO
-    participant DB as Banco H2 (Hibernate)
-
-    Admin->>View: Move aluno para "Matriculados"
-    View->>Ctrl: salvarMatricula(disciplina, alunos)
-    Ctrl->>DAO: update(disciplina)
-    DAO->>DB: BEGIN TRANSACTION
-    DAO->>DB: MERGE disciplina + matriculas
-    DB-->>DAO: OK
-    DAO->>DB: COMMIT
-    DAO-->>Ctrl: sucesso
-    Ctrl-->>View: atualiza listas
-    View-->>Admin: exibe confirmação
-```
-
-### Diagrama de Componentes
-
-```mermaid
-graph TB
-    subgraph Camada de Visão
-        V1[LoginView]
-        V2[AlunoFormDialog]
-        V3[DualListSelector]
-    end
-    subgraph Camada de Controle
-        C1[LoginController]
-        C2[MatriculaController]
-    end
-    subgraph Camada DAO
-        D1[UsuarioDAO]
-        D2[AlunoDAO]
-        D3[DisciplinaDAO]
-    end
-    subgraph Persistência
-        H[HibernateUtil / SessionFactory]
-        DB[(Banco H2)]
-    end
-    V1 --> C1
-    V2 --> C2
-    V3 --> C2
-    C1 --> D1
-    C2 --> D2
-    C2 --> D3
-    D1 --> H
-    D2 --> H
-    D3 --> H
-    H --> DB
-```
-
-### Diagrama de Implantação
-
-```mermaid
-graph TB
-    subgraph Node["🖥️ Estação de Trabalho (Win/Linux/macOS)"]
-        subgraph JVM["☕ JVM 23"]
-            APP["Sistema de Matrícula Acadêmica (.jar)"]
-            H2["(Banco H2 Embutido)"]
-        end
-    end
-    APP -->|JDBC| H2
-```
-
-### Máquina de Estados — Sessão do Usuário
-
-```mermaid
-stateDiagram-v2
-    [*] --> Deslogado
-    Deslogado --> Autenticando : envia credenciais
-    Autenticando --> Logado : válido (hash BCrypt confere)
-    Autenticando --> Deslogado : inválido
-    Logado --> GerenciandoAlunos
-    Logado --> GerenciandoMatriculas
-    GerenciandoAlunos --> Logado
-    GerenciandoMatriculas --> Logado
-    Logado --> Deslogado : logout
-    Deslogado --> [*]
-```
-
-> 📦 *Nota: para manter a concisão, os diagramas de Objetos, Comunicação, Atividades, Pacotes, Estrutura Composta, Visão Geral de Interação e Tempo foram consolidados nos diagramas acima — o escopo reduzido do sistema (3 entidades, 2 controllers, 1 componente de UI genérico) é totalmente coberto por estas seis visões.*
+---
 
 </details>
 
----
+## 📁 Estrutura do Projeto
 
 <details>
-<summary>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
 
-## 🗄️ 6. Modelo de Dados e Dicionário de Dados
+```
+DualListHibernate/
+│
+├── 📄 pom.xml                            # Build Maven: Hibernate, H2, FlatLaf, jBCrypt
+│
+└── 📂 src/main/
+    ├── 📂 java/br/com/projeto/
+    │   ├── 📄 MainApp.java                       # ★ Shell da aplicação — navbar, combo de curso, salvar
+    │   │
+    │   ├── 📂 controller/
+    │   │   └── 📄 MatriculaController.java        # ★ Orquestração de matrículas — API voltada à UI
+    │   │
+    │   ├── 📂 dao/
+    │   │   ├── 📄 AlunoDAO.java                   # Gateway de persistência do aluno
+    │   │   ├── 📄 DisciplinaDAO.java               # Gateway de persistência do curso
+    │   │   └── 📄 UsuarioDAO.java                  # Gateway de persistência do usuário + semeadura de admin
+    │   │
+    │   ├── 📂 model/
+    │   │   ├── 📄 Aluno.java                       # @Entity — aluno
+    │   │   ├── 📄 Disciplina.java                  # @Entity — curso, dono de @ManyToMany alunos
+    │   │   └── 📄 Usuario.java                     # @Entity — usuário, dono de @OneToMany disciplinas
+    │   │
+    │   ├── 📂 util/
+    │   │   ├── 📄 DatabaseSeeder.java              # Bootstrap de dados de demonstração
+    │   │   ├── 📄 HibernateUtil.java               # Singleton de SessionFactory
+    │   │   └── 📄 SecurityUtil.java                # Hash/verificação BCrypt
+    │   │
+    │   └── 📂 view/
+    │       ├── 📄 LoginView.java                   # Tela de autenticação
+    │       ├── 📄 DualListSelector.java            # ★ Widget genérico de transferência de lista dupla
+    │       └── 📄 AlunoFormDialog.java             # Modal de criação/edição de aluno
+    │
+    └── 📂 resources/
+        └── 📄 hibernate.cfg.xml                    # Configuração de conexão/dialeto Hibernate/H2
+│
+├── 📄 README.md                          # 🇺🇸 Inglês (principal)
+├── 📄 README_PT.md                       # 🇧🇷 Português (este arquivo)
+└── 📄 README_ES.md                       # 🇪🇸 Espanhol
+```
 
-</summary>
+---
 
-### Modelo Conceitual
+</details>
 
-Três conceitos centrais: **Usuário** (administrador), **Disciplina** (de propriedade de um Usuário) e **Aluno** (matriculado em zero ou mais Disciplinas). A relação entre Disciplina e Aluno é muitos-para-muitos ("Matrícula").
+## 📦 Módulos do Sistema
 
-### Modelo Lógico
+<details>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
 
-- `Usuario (1) ──< (N) Disciplina`
-- `Disciplina (N) ──< matriculas >── (N) Aluno`
+### 🏛️ MainApp — Shell da Aplicação
 
-### Modelo Físico — DER
+O `JFrame` principal, construído inteiramente em código (sem layout `.form`/XML). Contém uma navbar superior (título, seletor de curso, botão de novo curso, botões de ação de aluno, logout), um `DualListSelector` central, e um botão de salvar no rodapé.
+
+| Região | Conteúdo |
+|--------|----------|
+| Navbar esquerda | Título, combo box "Disciplina:", botão `+` de novo curso |
+| Navbar direita | Novo Aluno, Editar, Excluir, Sair |
+| Centro | `DualListSelector<Aluno>` vinculado ao curso selecionado |
+| Rodapé | "Salvar Alterações de Matrícula" — confirma a lista de destino como o corpo discente |
+
+`atualizarListas()` reconsulta os alunos disponíveis e matriculados via `MatriculaController` toda vez que o combo de curso muda.
+
+---
+
+### 🔐 LoginView — Tela de Autenticação
+
+O ponto de entrada da aplicação (lançado a partir de `main()` após o bootstrap). Coleta um login e senha, busca o `Usuario` via `UsuarioDAO`, e verifica a senha com `SecurityUtil.checkPassword` contra o hash BCrypt armazenado. Em caso de sucesso, abre `MainApp` com o `Usuario` autenticado; em caso de falha, permanece na tela.
+
+---
+
+### 🔀 DualListSelector — Widget Genérico de Lista Dupla
+
+O componente central de UI, parametrizado como `DualListSelector<T>` para que a mecânica de transferência seja reutilizável além de alunos.
+
+| Elemento | Papel |
+|----------|-------|
+| `sourceModel` / `targetModel` | Dois `DefaultListModel<T>` que apoiam as `JList`s "disponível" e "matriculado" |
+| `>` / `<` | Move a seleção atual um item por vez |
+| `>>` / `<<` | Move todos os itens de uma vez — protegido por `checkAuth()` |
+| `ModernStudentRenderer` | Renderizador de célula customizado que desenha um avatar de iniciais, nome e subtítulo "matrícula • email" |
+| `checkAuth()` | Solicita a senha do admin logado antes que uma movimentação em massa prossiga |
+
+`setSourceItems`/`setTargetItems` e `getSourceItems`/`getTargetItems` são o contrato público do widget — `MainApp` lê e escreve através deles, nunca tocando diretamente nos modelos Swing.
+
+---
+
+### 🎮 MatriculaController — Orquestração de Matrículas
+
+O único ponto de contato entre as views Swing e a camada DAO.
+
+| Método | Responsabilidade |
+|--------|-------------------|
+| `salvarAluno(Aluno)` | Cria ou atualiza um aluno via `AlunoDAO` |
+| `excluirAluno(Aluno)` | Remove o aluno do corpo discente de todos os cursos, depois exclui o registro |
+| `criarDisciplina(nome, usuario)` | Cria um novo curso pertencente ao usuário informado |
+| `salvarMatriculas(disciplina, alunos)` | Sobrescreve a lista de matriculados de um curso com os alunos informados |
+| `listarDisciplinas(usuario)` | Cursos pertencentes ao usuário atual |
+| `listarAlunosDisponiveis(disciplina)` | Todos os alunos ainda não presentes no corpo discente do curso |
+| `listarAlunosMatriculados(disciplina)` | O corpo discente atual do curso |
+
+---
+
+### 🗄️ Camada DAO — AlunoDAO, DisciplinaDAO, UsuarioDAO
+
+Cada DAO abre uma `Session` do Hibernate a partir da `SessionFactory` compartilhada de `HibernateUtil`, envolve uma transação, e fecha a sessão — uma sessão por chamada, sem sessão de longa duração mantida ao longo do ciclo de vida da UI. `DisciplinaDAO.listarPorUsuario` e `AlunoDAO.listarTodos` apoiam, respectivamente, o combo box e a lista de origem.
+
+---
+
+### 🔐 SecurityUtil — Hash de Senha
+
+Dois métodos estáticos que envolvem o jBCrypt.
+
+| Método | Comportamento |
+|--------|---------------|
+| `hashPassword(plaintext)` | `BCrypt.hashpw(plaintext, BCrypt.gensalt(12))` — fator de custo 12 |
+| `checkPassword(plaintext, hash)` | Rejeita imediatamente se `hash` for nulo ou não começar com `$2a$`, senão usa `BCrypt.checkpw` |
+
+---
+
+### ⚙️ HibernateUtil / DatabaseSeeder
+
+`HibernateUtil` constrói e armazena em cache uma única `SessionFactory` a partir de `hibernate.cfg.xml`. `DatabaseSeeder.run()` e `UsuarioDAO.criarUsuarioAdminSeNaoExistir()` rodam na inicialização para que a aplicação esteja imediatamente utilizável em um arquivo H2 novo, sem entrada manual de dados.
+
+---
+
+</details>
+
+## 💼 Regras de Negócio
+
+<details>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
+
+### 🎓 Regras de Matrícula
+
+| # | Regra | Aplicação |
+|---|-------|-----------|
+| RN-01 | Um aluno está "matriculado" em um curso se e somente se aparecer na lista de destino daquele curso no momento de salvar | `salvarMatriculas` sobrescreve `disciplina.alunos` por completo |
+| RN-02 | A lista de disponíveis de um curso exclui todo aluno já matriculado | `listarAlunosDisponiveis` filtra pelo conjunto de IDs matriculados |
+| RN-03 | Mover um único aluno exige apenas uma seleção, não autenticação | `>` / `<` chamam `moveItems` diretamente |
+| RN-04 | Mover uma lista inteira exige a senha do admin logado | `>>` / `<<` chamam `checkAuth()` antes de `moveAll()` |
+| RN-05 | Mudanças de matrícula não são persistidas até que "Salvar Alterações de Matrícula" seja pressionado | O estado da lista dupla é puramente do lado do cliente até o botão do rodapé disparar |
+
+### 👤 Regras de Aluno
+
+| # | Regra | Aplicação |
+|---|-------|-----------|
+| RN-06 | `matricula` (número de matrícula do aluno) deve ser única | `@Column(unique = true)` em `Aluno.matricula` |
+| RN-07 | `nome` e `matricula` são obrigatórios | `@Column(nullable = false)` |
+| RN-08 | Excluir um aluno o remove primeiro de todos os cursos em que estava matriculado | `excluirAluno` itera todos os cursos antes da exclusão via DAO |
+
+### 🎓 Regras de Curso
+
+| # | Regra | Aplicação |
+|---|-------|-----------|
+| RN-09 | Todo curso pertence a exatamente um usuário dono | `@ManyToOne` `Disciplina.usuario`, não anulável |
+| RN-10 | Um usuário só vê e gerencia seus próprios cursos | `listarDisciplinas(usuario)` escopa a consulta |
+| RN-11 | Um novo curso começa com corpo discente vazio | `Disciplina.alunos` tem como padrão um `ArrayList` vazio |
+
+### 🔐 Regras de Autenticação
+
+| # | Regra | Aplicação |
+|---|-------|-----------|
+| RN-12 | `login` deve ser único | `@Column(unique = true)` em `Usuario.login` |
+| RN-13 | Senhas nunca são armazenadas em texto puro | Apenas `senhaHash` é persistido, produzido por `SecurityUtil.hashPassword` |
+| RN-14 | Uma conta de admin tem garantia de existir na primeira execução | `criarUsuarioAdminSeNaoExistir()` na inicialização |
+
+---
+
+</details>
+
+## ✅ Requisitos Funcionais
+
+<details>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
+
+| ID | Requisito | Prioridade | Status |
+|----|-----------|------------|--------|
+| **RF-01** | O sistema deve exigir login antes de exibir a tela de matrícula | 🔴 Alta | ✅ Implementado |
+| **RF-02** | O sistema deve listar alunos ainda não matriculados no curso selecionado | 🔴 Alta | ✅ Implementado |
+| **RF-03** | O sistema deve listar alunos já matriculados no curso selecionado | 🔴 Alta | ✅ Implementado |
+| **RF-04** | O sistema deve mover um único aluno selecionado entre as duas listas | 🔴 Alta | ✅ Implementado |
+| **RF-05** | O sistema deve mover todos os alunos de uma lista de uma só vez | 🟡 Média | ✅ Implementado |
+| **RF-06** | O sistema deve exigir reentrada de senha antes de uma movimentação em massa | 🔴 Alta | ✅ Implementado |
+| **RF-07** | O sistema deve persistir a matrícula apenas quando o botão salvar for pressionado | 🔴 Alta | ✅ Implementado |
+| **RF-08** | O sistema deve permitir criar um novo curso inline | 🟡 Média | ✅ Implementado |
+| **RF-09** | O sistema deve permitir criar um novo aluno via formulário modal | 🔴 Alta | ✅ Implementado |
+| **RF-10** | O sistema deve permitir editar os dados de um aluno existente | 🔴 Alta | ✅ Implementado |
+| **RF-11** | O sistema deve permitir excluir um aluno após confirmação | 🔴 Alta | ✅ Implementado |
+| **RF-12** | O sistema deve remover um aluno excluído de todos os corpos discentes | 🔴 Alta | ✅ Implementado |
+| **RF-13** | O sistema deve semear um usuário admin automaticamente na primeira execução | 🟡 Média | ✅ Implementado |
+| **RF-14** | O sistema deve semear dados de demonstração automaticamente na primeira execução | 🟢 Baixa | ✅ Implementado |
+| **RF-15** | O sistema deve avisar quando uma ação exigir uma seleção ausente | 🟡 Média | ✅ Implementado |
+| **RF-16** | O sistema deve fazer logout e retornar à tela de login | 🟡 Média | ✅ Implementado |
+
+---
+
+</details>
+
+## ⚡ Requisitos Não Funcionais
+
+<details>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
+
+| ID | Categoria | Requisito | Meta |
+|----|-----------|-----------|------|
+| **RNF-01** | ⚡ Desempenho | Troca de curso até atualização das listas | < 300 ms em H2 local |
+| **RNF-02** | 🗄️ Persistência | A escrita de matrícula é atômica por curso | Transação única `salvarOuAtualizar` |
+| **RNF-03** | 🔐 Segurança | Senhas armazenadas apenas como hash BCrypt | Fator de custo 12 |
+| **RNF-04** | 🎨 Usabilidade | A UI segue uma linguagem visual flat moderna | FlatLaf Mac Light + props `STYLE` customizadas |
+| **RNF-05** | 🧱 Manutenibilidade | O código de UI nunca chama o Hibernate diretamente | Todo acesso mediado por DAOs |
+| **RNF-06** | 🔁 Reusabilidade | A mecânica de lista de transferência não é específica de aluno | `DualListSelector<T>` é genérico |
+| **RNF-07** | 🌱 Configuração zero | A aplicação inicia contra um banco vazio sem passos manuais | Semeadura automática de admin + dados de demo |
+| **RNF-08** | 🖥️ Portabilidade | Roda em qualquer host com JDK 23, sem servidor de banco externo | H2 embarcado |
+
+---
+
+</details>
+
+## 🗄️ Modelo de Dados
+
+<details>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
+
+### Diagrama Entidade-Relacionamento
 
 ```mermaid
 erDiagram
-    USUARIO ||--o{ DISCIPLINA : cria
-    DISCIPLINA ||--o{ MATRICULAS : possui
-    ALUNO ||--o{ MATRICULAS : possui
+    USUARIO ||--o{ DISCIPLINA : "possui"
+    DISCIPLINA }o--o{ ALUNO : "matricula (matriculas)"
 
     USUARIO {
-      bigint id PK
-      varchar login
-      varchar senha_hash
+        Long id PK
+        string login "único, não nulo"
+        string senhaHash "BCrypt, não nulo"
     }
+
     DISCIPLINA {
-      bigint id PK
-      varchar nome
-      bigint usuario_id FK
+        Long id PK
+        string nome "não nulo"
+        Long usuario_id FK "usuário dono"
     }
+
     ALUNO {
-      bigint id PK
-      varchar nome
-      varchar matricula
-      varchar email
-      varchar telefone
+        Long id PK
+        string nome "não nulo"
+        string matricula "único, não nulo"
+        string email
+        string telefone
     }
+
     MATRICULAS {
-      bigint disciplina_id FK
-      bigint aluno_id FK
+        Long disciplina_id FK
+        Long aluno_id FK
     }
+
+    DISCIPLINA ||--o{ MATRICULAS : "tabela de junção"
+    ALUNO ||--o{ MATRICULAS : "tabela de junção"
 ```
 
-### Dicionário de Dados
+### Especificação das Tabelas
 
-**`alunos`**
+| Tabela | Entidade correspondente | Relacionamento-chave |
+|--------|--------------------------|------------------------|
+| `usuarios` | `Usuario` | `@OneToMany(mappedBy="usuario", cascade=ALL, fetch=EAGER)` → `disciplinas` |
+| `disciplinas` | `Disciplina` | `@ManyToOne` → `usuario`; `@ManyToMany(fetch=EAGER)` via `matriculas` → `alunos` |
+| `alunos` | `Aluno` | Referenciado por `matriculas`; identidade via `id`, chave de negócio via `matricula` |
+| `matriculas` | tabela de junção | `disciplina_id` + `aluno_id`, declarada via `@JoinTable` em `Disciplina.alunos` |
 
-| Campo | Tipo | Restrições | Descrição |
-|---|---|---|---|
-| id | BIGINT | PK, auto-incremento | Identificador único do aluno |
-| nome | VARCHAR | NOT NULL | Nome completo |
-| matricula | VARCHAR | NOT NULL, UNIQUE | Número de matrícula |
-| email | VARCHAR | opcional | E-mail de contato |
-| telefone | VARCHAR | opcional | Telefone de contato |
-
-**`usuarios`**
-
-| Campo | Tipo | Restrições | Descrição |
-|---|---|---|---|
-| id | BIGINT | PK, auto-incremento | Identificador único do usuário |
-| login | VARCHAR | NOT NULL, UNIQUE | Nome de usuário |
-| senha_hash | VARCHAR | NOT NULL | Hash BCrypt da senha |
-
-**`disciplinas`**
-
-| Campo | Tipo | Restrições | Descrição |
-|---|---|---|---|
-| id | BIGINT | PK, auto-incremento | Identificador único da disciplina |
-| nome | VARCHAR | NOT NULL | Nome da disciplina |
-| usuario_id | BIGINT | FK → usuarios.id | Administrador proprietário |
-
-**`matriculas`** (tabela de junção)
-
-| Campo | Tipo | Restrições | Descrição |
-|---|---|---|---|
-| disciplina_id | BIGINT | FK → disciplinas.id | Disciplina matriculada |
-| aluno_id | BIGINT | FK → alunos.id | Aluno matriculado |
-
-</details>
+> [!NOTE]
+> `Disciplina.alunos` e `Usuario.disciplinas` são ambos `EAGER`-fetched, o que mantém simples a lógica de atualização da lista dupla ao custo de carregar grafos completos em toda consulta de curso/usuário — aceitável na escala desta aplicação.
 
 ---
 
-<details>
-<summary>
-
-## 🔀 7. Diagrama de Fluxo de Dados (DFD)
-
-</summary>
-
-```mermaid
-graph LR
-    Admin([👤 Administrador])
-
-    P1((1.0 Autenticar))
-    P2((2.0 Gerenciar Alunos))
-    P3((3.0 Gerenciar Matrículas))
-
-    DS1[(D1 - Usuários)]
-    DS2[(D2 - Alunos)]
-    DS3[(D3 - Disciplinas / Matrículas)]
-
-    Admin -->|credenciais| P1
-    P1 <-->|validar / criar| DS1
-    P1 -->|sessão| Admin
-
-    Admin -->|dados do aluno| P2
-    P2 <-->|CRUD| DS2
-
-    Admin -->|seleção de matrícula| P3
-    P3 <-->|leitura/escrita| DS2
-    P3 <-->|leitura/escrita| DS3
-    P3 -->|confirmação| Admin
-```
-
-> *Linhagem de dados: os dados de alunos e matrículas se originam de entrada manual do administrador ou do `DatabaseSeeder` (primeira execução), fluem pela camada DAO e são persistidos no armazenamento H2 (arquivo/memória) — nenhum sistema externo está envolvido.*
-
 </details>
 
----
+## 🔄 Fluxos do Sistema
 
 <details>
-<summary>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
 
-## 🏗️ 8. Diagrama de Arquitetura e Fluxograma
-
-</summary>
-
-### Arquitetura (MVC em Camadas)
+### Fluxo de Login
 
 ```mermaid
-graph TB
-    UI["🖼️ Camada de Apresentação<br/>(Views Swing + FlatLaf)"] --> CTRL["🧩 Camada de Controle<br/>(LoginController, MatriculaController)"]
-    CTRL --> DAO["🗄️ Camada de Acesso a Dados<br/>(AlunoDAO, DisciplinaDAO, UsuarioDAO)"]
-    DAO --> ORM["🔗 Hibernate ORM / HibernateUtil"]
-    ORM --> DB[("💾 Banco H2 (embutido)")]
-    CTRL --> UTIL["🛠️ Utilitários<br/>(SecurityUtil, DatabaseSeeder)"]
+sequenceDiagram
+    autonumber
+    participant U as 👤 Usuário
+    participant LV as 🔐 LoginView
+    participant DAO as 🗄️ UsuarioDAO
+    participant SEC as 🔐 SecurityUtil
+    participant APP as 🏛️ MainApp
+
+    U->>LV: informa login + senha
+    LV->>DAO: busca Usuario por login
+    DAO-->>LV: Usuario ou null
+    alt usuário não encontrado
+        LV-->>U: erro de autenticação
+    else usuário encontrado
+        LV->>SEC: checkPassword(plaintext, senhaHash)
+        SEC-->>LV: true/false
+        alt senha válida
+            LV->>APP: new MainApp(usuario)
+            APP-->>U: tela de matrícula
+        else inválida
+            LV-->>U: erro de autenticação
+        end
+    end
 ```
 
-### Fluxograma — Processo de Matrícula
+### Fluxo de Matrícula
 
 ```mermaid
 flowchart TD
-    A([Início]) --> B[Tela de Login]
-    B --> C{Credenciais válidas?}
-    C -- Não --> B
-    C -- Sim --> D[Abrir disciplina]
-    D --> E[Carregar listas Disponíveis e Matriculados]
-    E --> F{Mover aluno?}
-    F -- Sim --> G[Atualizar listas na UI]
-    G --> F
-    F -- Não --> H[Clicar em Salvar]
-    H --> I[Persistir via transação Hibernate]
-    I --> J([Fim])
+    A([Seleciona um curso]) --> B[atualizarListas]
+    B --> C[listarAlunosDisponiveis → lista origem]
+    B --> D[listarAlunosMatriculados → lista destino]
+    C & D --> E{Usuário move itens<br/>entre as listas}
+    E -->|único ›/‹| F[moveItems: atualiza apenas os modelos Swing]
+    E -->|em massa ›› / ‹‹| G[checkAuth]
+    G -->|senha válida| H[moveAll: atualiza apenas os modelos Swing]
+    G -->|cancelado/inválido| E
+    F & H --> I{Salvar pressionado?}
+    I -- Não --> E
+    I -- Sim --> J[salvarMatriculas: disciplina.alunos = lista destino]
+    J --> K[DisciplinaDAO persiste o corpo discente]
+    K --> L([Diálogo de confirmação])
+
+    style A fill:#1565C0,color:#fff
+    style L fill:#2E7D32,color:#fff
 ```
+
+### Fluxo de Autorização de Movimentação em Massa
+
+```mermaid
+flowchart TD
+    S([">> ou << pressionado"]) --> N{usuarioLogado<br/>definido?}
+    N -- Não --> ALLOW[Prossegue sem autenticação]
+    N -- Sim --> PROMPT[Exibe diálogo de campo de senha]
+    PROMPT --> OK{OK pressionado?}
+    OK -- Não --> DENY([Movimentação abortada])
+    OK -- Sim --> CHK[SecurityUtil.checkPassword]
+    CHK -- Válida --> MOVE[moveAll executa]
+    CHK -- Inválida --> DENY
+
+    style S fill:#1565C0,color:#fff
+    style MOVE fill:#2E7D32,color:#fff
+    style DENY fill:#B71C1C,color:#fff
+```
+
+---
 
 </details>
 
----
+## 🔐 Segurança
 
 <details>
-<summary>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
 
-## 👤 9. Persona e Mapa de Jornada do Usuário
+### Controles Implementados
 
-</summary>
+| Controle | Implementação | Efeito |
+|----------|---------------|--------|
+| 🔐 **Senhas com hash** | `BCrypt.hashpw` com fator de custo 12 | Senhas em texto puro nunca tocam o banco de dados |
+| ✅ **Verificação resistente a timing** | `BCrypt.checkpw` | Comparação BCrypt padrão, resistente a atalhos ingênuos de timing |
+| 🧪 **Validação de formato de hash** | `checkPassword` rejeita hashes que não começam com `$2a$` antes de comparar | Hashes malformados ou legados falham de forma segura em vez de lançar exceção |
+| 🛡️ **Reautenticação para ações em massa** | `checkAuth()` solicita novamente a senha antes de `moveAll()` | Uma sessão momentaneamente desbloqueada não consegue matricular ou desmatricular em massa silenciosamente |
+| 🔒 **Sem eco de senha em texto puro** | `JPasswordField` mascara a entrada no prompt de ação em massa | Resistência a "shoulder-surfing" durante o prompt de reautenticação |
 
-### Persona
+### Limitações de Segurança Conhecidas
 
-| Atributo | Descrição |
-|---|---|
-| **Nome** | Carla Mendes |
-| **Função** | Coordenadora Acadêmica |
-| **Idade** | 41 |
-| **Maturidade tecnológica** | Intermediária — confortável com apps desktop, não é desenvolvedora |
-| **Objetivos** | Matricular/desmatricular alunos rapidamente a cada semestre, sem erros |
-| **Frustrações** | Sistemas legados lentos e poluídos; medo de perder alterações não salvas |
-| **Frase** | *"Eu só preciso mover alunos entre as listas e saber que foi salvo."* |
+> [!WARNING]
+> Este é um app desktop educacional; os itens abaixo precisariam de atenção antes de qualquer uso em produção.
 
-### Mapa de Jornada do Usuário
+| Limitação | Risco | Caminho de mitigação |
+|-----------|-------|-----------------------|
+| 🗄️ **Arquivo H2 embarcado e não criptografado** | Qualquer um com acesso ao sistema de arquivos pode ler o banco diretamente | Habilitar criptografia de arquivo do H2 ou migrar para um banco servidor com controle de acesso adequado |
+| 🔓 **Sem bloqueio de sessão/conta** | Tentativas de login ilimitadas contra `LoginView` | Adicionar limitação de tentativas ou bloqueio após falhas repetidas |
+| 🧾 **Sem política de complexidade de senha** | `hashPassword` aceita qualquer string | Impor comprimento/complexidade mínimos antes de gerar o hash |
+| 🪪 **Modelo de credencial única de admin compartilhada** | O admin semeado é, de fato, a conta raiz | Introduzir papéis/permissões por usuário se o uso multi-tenant for pretendido |
+| 🧬 **Recursos preview do Java habilitados** | `--enable-preview` prende os builds a um conjunto específico de recursos do JDK | Fixar a build exata do JDK usada para compilação e distribuição |
 
-| Etapa | Ação | Ponto de Contato | Emoção | Ponto de Dor | Oportunidade |
-|---|---|---|---|---|---|
-| 1. Acesso | Abre o app e faz login | LoginView | Neutra | Esquece a senha | Feedback de erro claro (RF-001) |
-| 2. Orientação | Seleciona uma disciplina | MainView | Curiosa | Muitas disciplinas listadas | Busca/filtro (futuro) |
-| 3. Ação | Move alunos entre as listas | DualListSelector | Concentrada | Incerteza sobre qual lado é "matriculado" | Rótulos e ícones claros (RF-005) |
-| 4. Confirmação | Clica em "Salvar" | MainView | Aliviada | Sem feedback após salvar | Diálogo/toast de confirmação |
-| 5. Revisão | Reabre a disciplina para verificar | MainView | Confiante | — | Dados persistidos corretamente (RF-004) |
+---
 
 </details>
 
----
+## 🚀 Instalação & Execução
 
 <details>
-<summary>
-
-## 🖼️ 10. Wireframes e Mockups
-
-</summary>
-
-### Tela de Login (Wireframe)
-
-```
-┌──────────────────────────────────────┐
-│              🎓 LOGIN                 │
-│                                        │
-│   Usuário   [______________]         │
-│   Senha     [______________]         │
-│                                        │
-│         [  ENTRAR  ]  [ CADASTRAR ]   │
-│                                        │
-│   ⚠ Credenciais inválidas (em erro)   │
-└──────────────────────────────────────┘
-```
-
-### Tela Principal — Lista Dupla (Mockup)
-
-```
-┌────────────────────────────────────────────────────────────────┐
-│  Disciplina: [ Cálculo I       ▼ ]               [ Salvar 💾 ]  │
-├─────────────────────────┬───────────┬──────────────────────────┤
-│  ALUNOS DISPONÍVEIS      │           │   ALUNOS MATRICULADOS    │
-│  ────────────────────    │  ➡ Add    │   ────────────────────   │
-│  👤 2024001 - Ana Silva   │           │   👤 2024010 - João Lima  │
-│  👤 2024002 - Bruno Costa │  ⬅ Remove │   👤 2024011 - Maria Reis │
-│  👤 2024003 - Carla Souza │           │   👤 2024012 - Pedro Alve │
-│  ...                      │           │   ...                    │
-├─────────────────────────┴───────────┴──────────────────────────┤
-│ [ + Novo Aluno ]  [ ✎ Editar ]  [ 🗑 Excluir ]                   │
-└────────────────────────────────────────────────────────────────┘
-```
-
-</details>
-
----
-
-## 🚀 Instalação e Execução
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
 
 ### Pré-requisitos
 
-* **Java JDK 23**
-* **Maven** 3.8+
-* **Git** (opcional)
-* IDE recomendada: **IntelliJ IDEA**
+```bash
+java -version     # JDK 23 exigido (recursos preview)
+mvn -version       # Apache Maven
+```
 
-### Passo a Passo
+### Build
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/VictorHJesusSantiago/DualListHibernate.git
-   ```
-2. Abra o projeto na IDE e deixe o Maven baixar as dependências do `pom.xml`.
-3. Configure o Project SDK para **Java 23**.
-4. Execute `src/main/java/br/com/projeto/MainApp.java`.
+```bash
+mvn clean compile
+mvn package          # produz target/DualListHibernate-1.0-SNAPSHOT.jar
+```
 
-### 🔑 Acesso Padrão
+### Execução
 
-Na primeira execução, o sistema cria:
+```bash
+mvn exec:java -Dexec.mainClass="br.com.projeto.MainApp"
 
-* **Usuário:** `admin`
-* **Senha:** `1234`
+# Ou diretamente, com recursos preview habilitados:
+java --enable-preview -cp target/classes:$(mvn dependency:build-classpath -q -Dmdep.outputFile=/dev/stdout) br.com.projeto.MainApp
+```
+
+Na primeira execução, a aplicação cria automaticamente o usuário admin e semeia cursos/alunos de demonstração — nenhuma configuração manual de banco é necessária.
 
 ---
 
-## 👨‍💻 Autor
+</details>
 
-<table>
-  <tr>
-    <td width="100" align="center">
-      <img src="https://avatars.githubusercontent.com/u/142981329?v=4" width="90" alt="Avatar" style="border-radius: 50%;">
-    </td>
-    <td>
-      <strong>Victor Henrique Jesus Santiago</strong><br>
-      Desenvolvedor Full Stack<br><br>
-      📧 <a href="mailto:victorhenriquedejesussantiago@gmail.com">victorhenriquedejesussantiago@gmail.com</a><br>
-      👔 <a href="https://www.linkedin.com/in/victor-henrique-de-jesus-santiago/">LinkedIn/victorhjsantiago</a><br>
-      🐙 <a href="https://github.com/VictorHJesusSantiago">GitHub/VictorHJesusSantiago</a>
-    </td>
-  </tr>
-</table>
+## 🧪 Testes Automatizados
+
+<details>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
+
+> [!IMPORTANT]
+> Não existem fontes de teste neste repositório (`src/test` está ausente). A tabela abaixo é uma checklist para verificação manual e ponto de partida para uma futura suíte JUnit.
+
+### Checklist Manual de Aceitação
+
+| # | Cenário | Resultado esperado |
+|---|---------|---------------------|
+| 1 | Lançar em um banco vazio | Usuário admin e dados de demonstração são semeados automaticamente |
+| 2 | Logar com credenciais válidas | `MainApp` abre com os cursos pertencentes àquele usuário |
+| 3 | Logar com credenciais inválidas | Acesso negado, permanece em `LoginView` |
+| 4 | Mover um aluno com `>` | O aluno aparece apenas na lista de matriculados, ainda não persistido |
+| 5 | Mover todos os alunos com `>>` | O prompt de senha aparece antes de a movimentação executar |
+| 6 | Cancelar o prompt de senha da ação em massa | Nenhum aluno se move |
+| 7 | Salvar a matrícula | `disciplina.alunos` no H2 corresponde exatamente à lista de destino |
+| 8 | Excluir um aluno matriculado em 2 cursos | O aluno desaparece do corpo discente de ambos os cursos e do banco de dados |
+| 9 | Criar uma `matricula` duplicada | A persistência falha devido à restrição de unicidade |
+
+---
+
+</details>
+
+## 📊 Métricas & Monitoramento
+
+<details>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
+
+| Métrica | Valor |
+|---------|-------|
+| Entidades JPA | 3 (`Usuario`, `Disciplina`, `Aluno`) |
+| Classes DAO | 3 |
+| Views Swing | 3 (`LoginView`, `MainApp`, `AlunoFormDialog`) |
+| Widgets genéricos | 1 (`DualListSelector<T>`) |
+| Dependências diretas | 4 (Hibernate, H2, FlatLaf, jBCrypt) |
+| Fator de custo BCrypt | 12 |
+| Nível de preview do Java | 23 |
+
+---
+
+</details>
+
+## ⚠️ Limitações Conhecidas
+
+<details>
+<summary>▶️ <strong>Clique para expandir / recolher esta seção</strong></summary>
+
+> [!IMPORTANT]
+> Desenvolvido como demonstração educacional de mapeamento ORM com Hibernate e de um widget reutilizável de transferência em lista dupla no Swing.
+
+| Categoria | Problema | Status |
+|-----------|----------|--------|
+| 🧪 **Sem testes automatizados** | `src/test` está ausente | ⚠️ Aberto — adicionar cobertura JUnit para `MatriculaController` e round-trips de DAO |
+| ↩️ **Sem desfazer antes de salvar** | Uma vez pressionado "Salvar", o corpo discente anterior se perde | ⚠️ Aberto — capturar um snapshot do corpo discente anterior para uma opção de rollback |
+| 🔓 **Sem bloqueio de conta** | Tentativas de login ilimitadas | ⚠️ Aberto — adicionar limitação |
+| 🗄️ **Arquivo H2 não criptografado** | Acesso ao sistema de arquivos equivale a acesso aos dados | ⚠️ Aberto — habilitar criptografia do H2 para qualquer uso além de demonstração local |
+| 🧬 **Dependência de recursos preview do Java 23** | Prende a build a um conjunto específico de recursos do JDK | ➕ Intencional para o escopo desta demonstração, mas vale revisitar para longevidade |
+
+</details>
+
+---
+
+<div align="center">
+
+---
+
+### 🎓 DualListHibernate
+
+*Duas listas, um corpo discente: matrícula como um arrastar entre colunas*
+
+[![Java](https://img.shields.io/badge/Escrito%20em-Java%2023-ED8B00?style=flat-square&logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![Hibernate](https://img.shields.io/badge/ORM-Hibernate%206-59666C?style=flat-square&logo=hibernate&logoColor=white)](https://hibernate.org/)
+[![Swing](https://img.shields.io/badge/UI-Java%20Swing%20%2B%20FlatLaf-4E9A06?style=flat-square)]()
+
+<br/>
+
+```
+"Matrícula aqui não é uma caixa de seleção — é em qual coluna o nome está."
+```
+
+</div>
